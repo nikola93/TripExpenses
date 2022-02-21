@@ -164,7 +164,7 @@ function ExpenseRow({ setRowCount, index }: ExpenseTableRowProps) {
 }
 
 interface ExpenseTableProps {
-  setDueMap: Dispatch<SetStateAction<Map<string, number>>>;
+  onExpensesTableChange(expenseData: Map<string, number>[]): void;
   dueMap: Map<string, number>;
 }
 
@@ -173,17 +173,8 @@ interface ExpenseTableRowProps {
   index: number;
 }
 
-function ExpenseTable({ setDueMap }: ExpenseTableProps) {
+function ExpenseTable({ onExpensesTableChange }: ExpenseTableProps) {
   const [rowCount, setRowCount] = useState<Map<string, number>[]>([]);
-
-  const dueMap: Map<string, number> = new Map<string, number>([
-    ["BANE_DJOKA", 0],
-    ["BANE_MARE", 0],
-    ["MARE_BANE", 0],
-    ["MARE_DJOKA", 0],
-    ["DJOKA_BANE", 0],
-    ["DJOKA_MARE", 0],
-  ]);
 
   const handleRowChange = (item: Map<string, number>, index: number) => {
     setRowCount((prevState) => {
@@ -195,19 +186,7 @@ function ExpenseTable({ setDueMap }: ExpenseTableProps) {
   };
 
   useEffect(() => {
-    dueMap.forEach((value, key) => {
-      dueMap.set(key, 0);
-    });
-
-    rowCount.forEach((item) => {
-      dueMap.forEach((value, key) => {
-        const oldValue = dueMap.get(key) ?? 0;
-        const itemValue = item.get(key) ?? 0;
-        dueMap.set(key, oldValue + itemValue);
-      });
-    });
-    setDueMap(dueMap);
-    console.log("DUE MAP", dueMap);
+    onExpensesTableChange(rowCount);
   }, [rowCount]);
 
   return (
@@ -284,9 +263,33 @@ export function TripExpenses() {
     ])
   );
 
+  const handleExpensesTableChange = (expenseData: Map<string, number>[]) => {
+    const dueMap: Map<string, number> = new Map<string, number>([
+      ["BANE_DJOKA", 0],
+      ["BANE_MARE", 0],
+      ["MARE_BANE", 0],
+      ["MARE_DJOKA", 0],
+      ["DJOKA_BANE", 0],
+      ["DJOKA_MARE", 0],
+    ]);
+
+    expenseData.forEach((item) => {
+      dueMap.forEach((value, key) => {
+        const oldValue = dueMap.get(key) ?? 0;
+        const itemValue = item.get(key) ?? 0;
+        dueMap.set(key, oldValue + itemValue);
+      });
+    });
+    setTravelersDueMap(dueMap);
+    console.log("DUE MAP", dueMap);
+  };
+
   return (
     <div>
-      <ExpenseTable dueMap={travelersDueMap} setDueMap={setTravelersDueMap} />
+      <ExpenseTable
+        dueMap={travelersDueMap}
+        onExpensesTableChange={handleExpensesTableChange}
+      />
       <DueTable dueMap={travelersDueMap} />
       <FinalExpenseTable dueMap={travelersDueMap} />
     </div>
