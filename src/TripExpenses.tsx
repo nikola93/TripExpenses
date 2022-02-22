@@ -180,7 +180,6 @@ function ExpenseTable({ onExpensesTableChange }: ExpenseTableProps) {
     setRowCount((prevState) => {
       const newState = new Array(...prevState);
       newState[index] = item;
-      console.log("TABLE ROWS", newState);
       return newState;
     });
   };
