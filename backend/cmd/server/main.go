@@ -10,7 +10,7 @@ import (
 	"github.com/nikola93/tripexpenses/backend/internal/service"
 )
 
-const defaultDSN = "host=localhost user=tripexpenses password=tripexpenses dbname=tripexpenses port=5432 sslmode=disable"
+const defaultDSN = "host=localhost user=tripexpenses password=tripexpenses dbname=tripexpenses port=5434 sslmode=disable"
 
 func main() {
 	addr := ":8080"

@@ -6,9 +6,34 @@ services:
       POSTGRES_PASSWORD: tripexpenses
       POSTGRES_DB: tripexpenses
     ports:
-      - "5432:5432"
+      # host:container. 5434 on the host avoids a native Postgres on 5432.
+      - "5434:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tripexpenses -d tripexpenses"]
+      interval: 2s
+      timeout: 5s
+      retries: 15
+
+  backend:
+    build: ./backend
+    environment:
+      DATABASE_URL: "host=db user=tripexpenses password=tripexpenses dbname=tripexpenses port=5432 sslmode=disable"
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "1604:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
 
 volumes:
   pgdata:

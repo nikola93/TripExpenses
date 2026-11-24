@@ -11,9 +11,23 @@ shows those debts per pair and then offsets each pair into a final settlement.
 - **frontend/**: React + TypeScript (Vite)
 - **backend/**: Go HTTP server with [Connect](https://connectrpc.com), GORM with PostgreSQL
 - **proto/**: API definitions (protobuf), generated with `buf`
-- `docker-compose.yml` runs a local Postgres
+- `docker-compose.yml` runs the whole app: Postgres, the backend, and the
+  frontend (built and served by nginx, which proxies API calls to the backend)
 
-## Getting started
+## Running with Docker
+
+```sh
+docker compose up --build
+```
+
+Then open http://localhost:1604. The backend is also exposed on
+http://localhost:8080/healthz and Postgres on `localhost:5434`
+(5434 on the host so it does not clash with a native Postgres on 5432).
+Stop with `docker compose down` (add `-v` to also delete the database volume).
+
+## Local development
+
+For hot reload, run only the database in Docker and the rest natively:
 
 ```sh
 # Database (needed by the backend)
