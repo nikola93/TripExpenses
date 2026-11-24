@@ -11,35 +11,53 @@ shows those debts per pair and then offsets each pair into a final settlement.
 - **frontend/**: React + TypeScript (Vite)
 - **backend/**: Go HTTP server with [Connect](https://connectrpc.com), GORM with PostgreSQL
 - **proto/**: API definitions (protobuf), generated with `buf`
-- `docker-compose.yml` runs the whole app: Postgres, the backend, and the
+- `docker-compose.yml` runs the production stack: Postgres, the backend, and the
   frontend (built and served by nginx, which proxies API calls to the backend)
+- `docker-compose.dev.yml` runs the development stack with hot reload: Postgres,
+  the backend under [Air](https://github.com/air-verse/air), and the Vite dev server
 
-## Running with Docker
+## Running with Docker (production)
+
+Both compose files read the database credentials and the backend's
+`DATABASE_URL` from `.docker.env` (gitignored). Create it once from the example
+and set a password in both places:
+
+```sh
+cp .docker.env.example .docker.env
+```
 
 ```sh
 docker compose up --build
 ```
 
 Then open http://localhost:1604. The backend is also exposed on
-http://localhost:8080/healthz and Postgres on `localhost:5434`
-(5434 on the host so it does not clash with a native Postgres on 5432).
+http://localhost:8080/healthz and Postgres on `localhost:5435`
+(5435 on the host so it does not clash with a native Postgres on 5432 or other
+projects).
 Stop with `docker compose down` (add `-v` to also delete the database volume).
 
-To rebuild and restart the backend and frontend automatically whenever their code changes,
-run `docker compose watch` instead (or alongside `docker compose up -d`).
-
-For frontend hot module reload inside Docker, add the `dev` profile:
+## Developing with Docker (hot reload)
 
 ```sh
-docker compose --profile dev watch
+docker compose -f docker-compose.dev.yml up --build
 ```
 
-This also starts the Vite dev server on http://localhost:1605. Edits in
-`frontend/src` are synced into the container and hot-reloaded without a rebuild.
+In GoLand, the **Dev watch** run configuration runs the same command.
+
+This starts the Vite dev server on http://localhost:1604, the backend on
+http://localhost:8080 and Postgres on `localhost:5435`. `backend/` and
+`frontend/` are bind-mounted into the containers: Air rebuilds and restarts the
+Go server on every change, and Vite hot-reloads the page. After changing
+`package.json`, add `-V` to the command so the container's `node_modules`
+volume is recreated.
+
+The dev and production stacks use the same ports and share the database volume,
+so run one at a time (`docker compose down` before starting the other).
+Stop the dev stack with `docker compose -f docker-compose.dev.yml down`.
 
 ## Local development
 
-For hot reload, run only the database in Docker and the rest natively:
+To run the backend and frontend natively instead, start only the database in Docker:
 
 ```sh
 # Database (needed by the backend)
