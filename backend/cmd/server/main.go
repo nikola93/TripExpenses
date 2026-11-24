@@ -43,5 +43,11 @@ func main() {
 	})
 
 	log.Printf("listening on %s", addr)
-	log.Fatal(http.ListenAndServe(addr, mux))
+	// Serve HTTP/2 without TLS (h2c) alongside HTTP/1.1 so plain gRPC
+	// clients work, not just the Connect and gRPC-Web protocols.
+	protocols := new(http.Protocols)
+	protocols.SetHTTP1(true)
+	protocols.SetUnencryptedHTTP2(true)
+	srv := &http.Server{Addr: addr, Handler: mux, Protocols: protocols}
+	log.Fatal(srv.ListenAndServe())
 }
