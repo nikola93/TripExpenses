@@ -21,6 +21,14 @@ export default function App() {
   const [gross, setGross] = useState<Debt[]>([]);
   const [net, setNet] = useState<Debt[]>([]);
   const [error, setError] = useState("");
+  const [toast, setToast] = useState("");
+
+  // Hides the toast a few seconds after it was shown.
+  useEffect(() => {
+    if (!toast) return;
+    const timer = setTimeout(() => setToast(""), 3000);
+    return () => clearTimeout(timer);
+  }, [toast]);
 
   const sheet = sheets.find((s) => s.id === sheetId);
 
@@ -101,6 +109,7 @@ export default function App() {
       if (!saved) return;
       setSheets(sheets.map((s) => (s.id === saved.id ? saved : s)));
       setError("");
+      setToast(`Trošak „${sheetTitle(saved)}“ je sačuvan.`);
     } catch (err) {
       setError(ConnectError.from(err).message);
     }
@@ -116,8 +125,8 @@ export default function App() {
     travelers.find((t) => t.id === id)?.name ?? `#${id}`;
 
   return (
-    <div className="layout">
-      <main>
+    <div className="flex min-h-screen font-sans text-gray-900">
+      <main className="min-w-0 flex-1 overflow-x-auto p-8">
         <h1>Troškovi puta</h1>
         {sheet && (
           <SaveSheet
@@ -127,7 +136,7 @@ export default function App() {
             onSave={saveSheet}
           />
         )}
-        {error && <p className="error">{error}</p>}
+        {error && <p className="mb-4 text-red-700">{error}</p>}
         <Travelers travelers={travelers} onAdd={addTraveler} />
         {travelers.length > 0 && (
           <>
@@ -152,6 +161,14 @@ export default function App() {
         canStartNew={sheetId !== null && sheet?.saved === true}
         onOpen={openSheet}
       />
+      {toast && (
+        <div
+          role="status"
+          className="fixed bottom-6 left-1/2 -translate-x-1/2 animate-[toast-in_0.2s_ease-out] rounded-md bg-green-700 px-5 py-3 text-white shadow-lg"
+        >
+          {toast}
+        </div>
+      )}
     </div>
   );
 }
@@ -180,19 +197,23 @@ function SaveSheet({
   };
 
   return (
-    <form className="save-sheet" onSubmit={submit}>
+    <form className="mb-8 flex items-center gap-2" onSubmit={submit}>
       <input
         ref={input}
         value={name}
         onChange={(e) => setName(e.target.value)}
         placeholder="Naziv troška (npr. Zlatibor 2026)"
+        className="w-72"
         aria-label="Naziv troška"
       />
-      <button type="submit" disabled={upToDate}>
+      <button
+        type="submit"
+        disabled={upToDate}
+        className="border-blue-600 bg-blue-600 text-white hover:bg-blue-700 disabled:hover:bg-blue-600"
+      >
         Sačuvaj trošak
       </button>
-      {upToDate && <span className="saved">Sačuvano</span>}
-      {!sheet.saved && <span className="draft">Nije sačuvano</span>}
+      {!sheet.saved && <span className="text-gray-500">Nije sačuvano</span>}
     </form>
   );
 }
@@ -209,8 +230,8 @@ function SavedSheets({
   onOpen: (id: bigint | null) => void;
 }) {
   return (
-    <aside className="sidebar">
-      <h2>Sačuvani troškovi</h2>
+    <aside className="w-64 shrink-0 border-l border-gray-300 bg-gray-50 px-4 py-8">
+      <h2 className="text-lg">Sačuvani troškovi</h2>
       <button
         type="button"
         disabled={!canStartNew}
@@ -220,14 +241,14 @@ function SavedSheets({
         + Novi trošak
       </button>
       {sheets.length === 0 ? (
-        <p className="muted">Još nema sačuvanih troškova.</p>
+        <p className="mt-4 text-gray-500">Još nema sačuvanih troškova.</p>
       ) : (
-        <ul>
+        <ul className="mt-4 space-y-1">
           {sheets.map((s) => (
             <li key={s.id.toString()}>
               <button
                 type="button"
-                className={s.id === currentId ? "active" : undefined}
+                className={`w-full text-left ${s.id === currentId ? "border-blue-500 font-semibold" : ""}`}
                 onClick={() => onOpen(s.id)}
               >
                 {sheetTitle(s)}
@@ -257,10 +278,12 @@ function Travelers({
   };
 
   return (
-    <section>
+    <section className="mb-10">
       <h2>Putnici</h2>
-      <p>{travelers.map((t) => t.name).join(", ") || "Još nema putnika."}</p>
-      <form onSubmit={submit}>
+      <p className="mb-2">
+        {travelers.map((t) => t.name).join(", ") || "Još nema putnika."}
+      </p>
+      <form className="flex gap-2" onSubmit={submit}>
         <input
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -320,10 +343,10 @@ function Expenses({
     e.shares.find((s) => s.travelerId === travelerId)?.amount ?? 0n;
 
   return (
-    <section>
+    <section className="mb-10">
       <h2>Troškovi</h2>
       <form onSubmit={submit}>
-        <table>
+        <table className="border-collapse">
           <thead>
             <tr>
               <th>Trošak</th>
@@ -412,9 +435,9 @@ function DueMatrix({
       ?.amount ?? 0n;
 
   return (
-    <section>
+    <section className="mb-10">
       <h2>Ko kome duguje (pre prebijanja)</h2>
-      <table>
+      <table className="border-collapse">
         <thead>
           <tr>
             <th>Duguje ↓ / prima →</th>
@@ -448,7 +471,7 @@ function NetDebts({
   nameOf: (id: bigint) => string;
 }) {
   return (
-    <section>
+    <section className="mb-10">
       <h2>Konačan obračun</h2>
       {net.length === 0 ? (
         <p>Niko nikome ne duguje.</p>

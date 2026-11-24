@@ -1,89 +1,42 @@
-body {
-  font-family: system-ui, sans-serif;
-  margin: 0;
+@import "tailwindcss";
+
+/* Shared look for plain form and table elements, so the markup only needs
+   utilities for layout. */
+@layer base {
+  h1 {
+    @apply mb-6 text-3xl font-bold;
+  }
+
+  h2 {
+    @apply mb-3 text-xl font-semibold;
+  }
+
+  th,
+  td {
+    @apply border border-gray-300 px-2.5 py-1 text-left;
+  }
+
+  th {
+    @apply bg-gray-50 font-semibold;
+  }
+
+  input,
+  select {
+    @apply rounded border border-gray-300 bg-white px-2 py-1 focus:border-blue-500 focus:outline-none;
+  }
+
+  input[type="number"] {
+    @apply w-24;
+  }
+
+  button {
+    @apply cursor-pointer rounded border border-gray-300 bg-white px-3 py-1 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white;
+  }
 }
 
-.layout {
-  display: flex;
-  align-items: flex-start;
-  min-height: 100vh;
-}
-
-.layout main {
-  flex: 1;
-  min-width: 0;
-  padding: 2rem;
-  overflow-x: auto;
-}
-
-.sidebar {
-  width: 16rem;
-  flex-shrink: 0;
-  align-self: stretch;
-  padding: 2rem 1rem;
-  border-left: 1px solid #ccc;
-  background: #f7f7f7;
-}
-
-.sidebar h2 {
-  margin-top: 0;
-  font-size: 1.1rem;
-}
-
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-}
-
-.sidebar li button {
-  width: 100%;
-  margin-bottom: 0.3rem;
-  text-align: left;
-}
-
-.sidebar li button.active {
-  font-weight: bold;
-}
-
-.save-sheet {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-  margin-bottom: 2rem;
-}
-
-.save-sheet input {
-  width: 18rem;
-}
-
-.saved {
-  color: #2e7d32;
-}
-
-.draft,
-.muted {
-  color: #777;
-}
-
-section {
-  margin-bottom: 2.5rem;
-}
-
-table {
-  border-collapse: collapse;
-}
-
-th,
-td {
-  border: 1px solid #ccc;
-  padding: 0.3rem 0.6rem;
-  text-align: left;
-}
-
-input[type="number"] {
-  width: 6rem;
-}
-
-.error {
-  color: #b00020;
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    margin-bottom: -0.5rem;
+  }
 }
