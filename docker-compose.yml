@@ -26,6 +26,13 @@ services:
       db:
         condition: service_healthy
     restart: unless-stopped
+    # `docker compose watch` rebuilds and restarts the backend on code changes.
+    develop:
+      watch:
+        - action: rebuild
+          path: ./backend
+          ignore:
+            - bin/
 
   frontend:
     build: ./frontend
@@ -34,6 +41,45 @@ services:
     depends_on:
       - backend
     restart: unless-stopped
+    # `docker compose watch` rebuilds the static bundle on code changes.
+    develop:
+      watch:
+        - action: rebuild
+          path: ./frontend
+          ignore:
+            - node_modules/
+            - dist/
+
+  # Vite dev server with hot module reload, only started with the "dev" profile:
+  #   docker compose --profile dev watch
+  frontend-dev:
+    profiles: [dev]
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    environment:
+      API_PROXY_TARGET: "http://backend:8080"
+    ports:
+      # 1605 on the host so it can run next to the nginx frontend on 1604.
+      - "1605:1604"
+    depends_on:
+      - backend
+    develop:
+      watch:
+        # Source edits are copied into the container; Vite hot-reloads them.
+        - action: sync
+          path: ./frontend/src
+          target: /app/src
+        - action: sync
+          path: ./frontend/index.html
+          target: /app/index.html
+        # Dependency or config changes need a fresh image.
+        - action: rebuild
+          path: ./frontend/package.json
+        - action: rebuild
+          path: ./frontend/package-lock.json
+        - action: rebuild
+          path: ./frontend/vite.config.ts
 
 volumes:
   pgdata:
