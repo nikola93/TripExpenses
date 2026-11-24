@@ -1,0 +1,63 @@
+# Development stack with hot reload. Start it with:
+#   docker compose -f docker-compose.dev.yml up --build
+# The source folders are bind-mounted into the containers: the backend runs
+# under Air and the frontend under the Vite dev server, so code changes are
+# picked up without a rebuild.
+# docker-compose.yml is the production stack.
+name: tripexpenses-dev
+
+services:
+  db:
+    image: postgres:17
+    # POSTGRES_USER, POSTGRES_PASSWORD and POSTGRES_DB (copy .docker.env.example).
+    env_file:
+      - ./.docker.env
+    ports:
+      # Same host port as the prod stack, so backend/.env works for a native backend too.
+      - "5435:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 2s
+      timeout: 5s
+      retries: 15
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: dev.Dockerfile
+    # DATABASE_URL pointing at the db service.
+    env_file:
+      - ./.docker.env
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      # Air watches the mounted source and rebuilds into backend/tmp/ (gitignored).
+      - ./backend:/workspace
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: dev.Dockerfile
+    environment:
+      API_PROXY_TARGET: "http://backend:8080"
+    ports:
+      - "1604:1604"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      # Keep the container's own node_modules (Linux builds of native packages)
+      # instead of the Mac's. After changing package.json, recreate it with:
+      #   docker compose -f docker-compose.dev.yml up --build -V
+      - /app/node_modules
+
+volumes:
+  pgdata:
+    # Shares the database with the prod stack (docker-compose.yml), so the same
+    # data shows up in both. The two stacks use the same ports, run one at a time.
+    name: tripexpenses_pgdata

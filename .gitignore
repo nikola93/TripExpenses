@@ -2,11 +2,13 @@
 node_modules/
 dist/
 /backend/bin/
+/backend/tmp/
 
 # Env and editor
 .env
 .env.*
 !.env.example
+.docker.env
 .DS_Store
 .idea/
 .vscode/
