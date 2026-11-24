@@ -22,7 +22,7 @@ docker compose up -d db
 # Backend (http://localhost:8080/healthz), DATABASE_URL defaults to the compose database
 cd backend && go run ./cmd/server
 
-# Frontend (http://localhost:5173), proxies API calls to the backend
+# Frontend (http://localhost:1604), proxies API calls to the backend
 cd frontend && npm install && npm run dev
 ```
 
