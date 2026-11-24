@@ -25,6 +25,18 @@ http://localhost:8080/healthz and Postgres on `localhost:5434`
 (5434 on the host so it does not clash with a native Postgres on 5432).
 Stop with `docker compose down` (add `-v` to also delete the database volume).
 
+To rebuild and restart the backend and frontend automatically whenever their code changes,
+run `docker compose watch` instead (or alongside `docker compose up -d`).
+
+For frontend hot module reload inside Docker, add the `dev` profile:
+
+```sh
+docker compose --profile dev watch
+```
+
+This also starts the Vite dev server on http://localhost:1605. Edits in
+`frontend/src` are synced into the container and hot-reloaded without a rebuild.
+
 ## Local development
 
 For hot reload, run only the database in Docker and the rest natively:
