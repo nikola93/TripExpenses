@@ -33,6 +33,15 @@ const (
 // reflection-formatted method names, remove the leading slash and convert the remaining slash to a
 // period.
 const (
+	// TripExpensesServiceListSheetsProcedure is the fully-qualified name of the TripExpensesService's
+	// ListSheets RPC.
+	TripExpensesServiceListSheetsProcedure = "/tripexpenses.v1.TripExpensesService/ListSheets"
+	// TripExpensesServiceCreateSheetProcedure is the fully-qualified name of the TripExpensesService's
+	// CreateSheet RPC.
+	TripExpensesServiceCreateSheetProcedure = "/tripexpenses.v1.TripExpensesService/CreateSheet"
+	// TripExpensesServiceSaveSheetProcedure is the fully-qualified name of the TripExpensesService's
+	// SaveSheet RPC.
+	TripExpensesServiceSaveSheetProcedure = "/tripexpenses.v1.TripExpensesService/SaveSheet"
 	// TripExpensesServiceListTravelersProcedure is the fully-qualified name of the
 	// TripExpensesService's ListTravelers RPC.
 	TripExpensesServiceListTravelersProcedure = "/tripexpenses.v1.TripExpensesService/ListTravelers"
@@ -55,6 +64,13 @@ const (
 
 // TripExpensesServiceClient is a client for the tripexpenses.v1.TripExpensesService service.
 type TripExpensesServiceClient interface {
+	// A sheet is one named calculation, e.g. a single trip. Travelers and
+	// expenses always belong to a sheet.
+	ListSheets(context.Context, *connect.Request[v1.ListSheetsRequest]) (*connect.Response[v1.ListSheetsResponse], error)
+	CreateSheet(context.Context, *connect.Request[v1.CreateSheetRequest]) (*connect.Response[v1.CreateSheetResponse], error)
+	// SaveSheet names the sheet and marks it saved, so it shows up in the list
+	// of saved sheets.
+	SaveSheet(context.Context, *connect.Request[v1.SaveSheetRequest]) (*connect.Response[v1.SaveSheetResponse], error)
 	ListTravelers(context.Context, *connect.Request[v1.ListTravelersRequest]) (*connect.Response[v1.ListTravelersResponse], error)
 	CreateTraveler(context.Context, *connect.Request[v1.CreateTravelerRequest]) (*connect.Response[v1.CreateTravelerResponse], error)
 	ListExpenses(context.Context, *connect.Request[v1.ListExpensesRequest]) (*connect.Response[v1.ListExpensesResponse], error)
@@ -76,6 +92,24 @@ func NewTripExpensesServiceClient(httpClient connect.HTTPClient, baseURL string,
 	baseURL = strings.TrimRight(baseURL, "/")
 	tripExpensesServiceMethods := v1.File_tripexpenses_v1_tripexpenses_proto.Services().ByName("TripExpensesService").Methods()
 	return &tripExpensesServiceClient{
+		listSheets: connect.NewClient[v1.ListSheetsRequest, v1.ListSheetsResponse](
+			httpClient,
+			baseURL+TripExpensesServiceListSheetsProcedure,
+			connect.WithSchema(tripExpensesServiceMethods.ByName("ListSheets")),
+			connect.WithClientOptions(opts...),
+		),
+		createSheet: connect.NewClient[v1.CreateSheetRequest, v1.CreateSheetResponse](
+			httpClient,
+			baseURL+TripExpensesServiceCreateSheetProcedure,
+			connect.WithSchema(tripExpensesServiceMethods.ByName("CreateSheet")),
+			connect.WithClientOptions(opts...),
+		),
+		saveSheet: connect.NewClient[v1.SaveSheetRequest, v1.SaveSheetResponse](
+			httpClient,
+			baseURL+TripExpensesServiceSaveSheetProcedure,
+			connect.WithSchema(tripExpensesServiceMethods.ByName("SaveSheet")),
+			connect.WithClientOptions(opts...),
+		),
 		listTravelers: connect.NewClient[v1.ListTravelersRequest, v1.ListTravelersResponse](
 			httpClient,
 			baseURL+TripExpensesServiceListTravelersProcedure,
@@ -117,12 +151,30 @@ func NewTripExpensesServiceClient(httpClient connect.HTTPClient, baseURL string,
 
 // tripExpensesServiceClient implements TripExpensesServiceClient.
 type tripExpensesServiceClient struct {
+	listSheets     *connect.Client[v1.ListSheetsRequest, v1.ListSheetsResponse]
+	createSheet    *connect.Client[v1.CreateSheetRequest, v1.CreateSheetResponse]
+	saveSheet      *connect.Client[v1.SaveSheetRequest, v1.SaveSheetResponse]
 	listTravelers  *connect.Client[v1.ListTravelersRequest, v1.ListTravelersResponse]
 	createTraveler *connect.Client[v1.CreateTravelerRequest, v1.CreateTravelerResponse]
 	listExpenses   *connect.Client[v1.ListExpensesRequest, v1.ListExpensesResponse]
 	createExpense  *connect.Client[v1.CreateExpenseRequest, v1.CreateExpenseResponse]
 	deleteExpense  *connect.Client[v1.DeleteExpenseRequest, v1.DeleteExpenseResponse]
 	getBalances    *connect.Client[v1.GetBalancesRequest, v1.GetBalancesResponse]
+}
+
+// ListSheets calls tripexpenses.v1.TripExpensesService.ListSheets.
+func (c *tripExpensesServiceClient) ListSheets(ctx context.Context, req *connect.Request[v1.ListSheetsRequest]) (*connect.Response[v1.ListSheetsResponse], error) {
+	return c.listSheets.CallUnary(ctx, req)
+}
+
+// CreateSheet calls tripexpenses.v1.TripExpensesService.CreateSheet.
+func (c *tripExpensesServiceClient) CreateSheet(ctx context.Context, req *connect.Request[v1.CreateSheetRequest]) (*connect.Response[v1.CreateSheetResponse], error) {
+	return c.createSheet.CallUnary(ctx, req)
+}
+
+// SaveSheet calls tripexpenses.v1.TripExpensesService.SaveSheet.
+func (c *tripExpensesServiceClient) SaveSheet(ctx context.Context, req *connect.Request[v1.SaveSheetRequest]) (*connect.Response[v1.SaveSheetResponse], error) {
+	return c.saveSheet.CallUnary(ctx, req)
 }
 
 // ListTravelers calls tripexpenses.v1.TripExpensesService.ListTravelers.
@@ -158,6 +210,13 @@ func (c *tripExpensesServiceClient) GetBalances(ctx context.Context, req *connec
 // TripExpensesServiceHandler is an implementation of the tripexpenses.v1.TripExpensesService
 // service.
 type TripExpensesServiceHandler interface {
+	// A sheet is one named calculation, e.g. a single trip. Travelers and
+	// expenses always belong to a sheet.
+	ListSheets(context.Context, *connect.Request[v1.ListSheetsRequest]) (*connect.Response[v1.ListSheetsResponse], error)
+	CreateSheet(context.Context, *connect.Request[v1.CreateSheetRequest]) (*connect.Response[v1.CreateSheetResponse], error)
+	// SaveSheet names the sheet and marks it saved, so it shows up in the list
+	// of saved sheets.
+	SaveSheet(context.Context, *connect.Request[v1.SaveSheetRequest]) (*connect.Response[v1.SaveSheetResponse], error)
 	ListTravelers(context.Context, *connect.Request[v1.ListTravelersRequest]) (*connect.Response[v1.ListTravelersResponse], error)
 	CreateTraveler(context.Context, *connect.Request[v1.CreateTravelerRequest]) (*connect.Response[v1.CreateTravelerResponse], error)
 	ListExpenses(context.Context, *connect.Request[v1.ListExpensesRequest]) (*connect.Response[v1.ListExpensesResponse], error)
@@ -175,6 +234,24 @@ type TripExpensesServiceHandler interface {
 // and JSON codecs. They also support gzip compression.
 func NewTripExpensesServiceHandler(svc TripExpensesServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
 	tripExpensesServiceMethods := v1.File_tripexpenses_v1_tripexpenses_proto.Services().ByName("TripExpensesService").Methods()
+	tripExpensesServiceListSheetsHandler := connect.NewUnaryHandler(
+		TripExpensesServiceListSheetsProcedure,
+		svc.ListSheets,
+		connect.WithSchema(tripExpensesServiceMethods.ByName("ListSheets")),
+		connect.WithHandlerOptions(opts...),
+	)
+	tripExpensesServiceCreateSheetHandler := connect.NewUnaryHandler(
+		TripExpensesServiceCreateSheetProcedure,
+		svc.CreateSheet,
+		connect.WithSchema(tripExpensesServiceMethods.ByName("CreateSheet")),
+		connect.WithHandlerOptions(opts...),
+	)
+	tripExpensesServiceSaveSheetHandler := connect.NewUnaryHandler(
+		TripExpensesServiceSaveSheetProcedure,
+		svc.SaveSheet,
+		connect.WithSchema(tripExpensesServiceMethods.ByName("SaveSheet")),
+		connect.WithHandlerOptions(opts...),
+	)
 	tripExpensesServiceListTravelersHandler := connect.NewUnaryHandler(
 		TripExpensesServiceListTravelersProcedure,
 		svc.ListTravelers,
@@ -213,6 +290,12 @@ func NewTripExpensesServiceHandler(svc TripExpensesServiceHandler, opts ...conne
 	)
 	return "/tripexpenses.v1.TripExpensesService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
+		case TripExpensesServiceListSheetsProcedure:
+			tripExpensesServiceListSheetsHandler.ServeHTTP(w, r)
+		case TripExpensesServiceCreateSheetProcedure:
+			tripExpensesServiceCreateSheetHandler.ServeHTTP(w, r)
+		case TripExpensesServiceSaveSheetProcedure:
+			tripExpensesServiceSaveSheetHandler.ServeHTTP(w, r)
 		case TripExpensesServiceListTravelersProcedure:
 			tripExpensesServiceListTravelersHandler.ServeHTTP(w, r)
 		case TripExpensesServiceCreateTravelerProcedure:
@@ -233,6 +316,18 @@ func NewTripExpensesServiceHandler(svc TripExpensesServiceHandler, opts ...conne
 
 // UnimplementedTripExpensesServiceHandler returns CodeUnimplemented from all methods.
 type UnimplementedTripExpensesServiceHandler struct{}
+
+func (UnimplementedTripExpensesServiceHandler) ListSheets(context.Context, *connect.Request[v1.ListSheetsRequest]) (*connect.Response[v1.ListSheetsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("tripexpenses.v1.TripExpensesService.ListSheets is not implemented"))
+}
+
+func (UnimplementedTripExpensesServiceHandler) CreateSheet(context.Context, *connect.Request[v1.CreateSheetRequest]) (*connect.Response[v1.CreateSheetResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("tripexpenses.v1.TripExpensesService.CreateSheet is not implemented"))
+}
+
+func (UnimplementedTripExpensesServiceHandler) SaveSheet(context.Context, *connect.Request[v1.SaveSheetRequest]) (*connect.Response[v1.SaveSheetResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("tripexpenses.v1.TripExpensesService.SaveSheet is not implemented"))
+}
 
 func (UnimplementedTripExpensesServiceHandler) ListTravelers(context.Context, *connect.Request[v1.ListTravelersRequest]) (*connect.Response[v1.ListTravelersResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("tripexpenses.v1.TripExpensesService.ListTravelers is not implemented"))

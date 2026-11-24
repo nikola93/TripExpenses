@@ -1,6 +1,68 @@
 body {
   font-family: system-ui, sans-serif;
-  margin: 2rem;
+  margin: 0;
+}
+
+.layout {
+  display: flex;
+  align-items: flex-start;
+  min-height: 100vh;
+}
+
+.layout main {
+  flex: 1;
+  min-width: 0;
+  padding: 2rem;
+  overflow-x: auto;
+}
+
+.sidebar {
+  width: 16rem;
+  flex-shrink: 0;
+  align-self: stretch;
+  padding: 2rem 1rem;
+  border-left: 1px solid #ccc;
+  background: #f7f7f7;
+}
+
+.sidebar h2 {
+  margin-top: 0;
+  font-size: 1.1rem;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li button {
+  width: 100%;
+  margin-bottom: 0.3rem;
+  text-align: left;
+}
+
+.sidebar li button.active {
+  font-weight: bold;
+}
+
+.save-sheet {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.save-sheet input {
+  width: 18rem;
+}
+
+.saved {
+  color: #2e7d32;
+}
+
+.draft,
+.muted {
+  color: #777;
 }
 
 section {

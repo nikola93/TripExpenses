@@ -6,6 +6,14 @@ option go_package = "github.com/nikola93/tripexpenses/backend/gen/tripexpenses/v
 
 // TripExpensesService tracks shared trip expenses and works out who owes whom.
 service TripExpensesService {
+  // A sheet is one named calculation, e.g. a single trip. Travelers and
+  // expenses always belong to a sheet.
+  rpc ListSheets(ListSheetsRequest) returns (ListSheetsResponse);
+  rpc CreateSheet(CreateSheetRequest) returns (CreateSheetResponse);
+  // SaveSheet names the sheet and marks it saved, so it shows up in the list
+  // of saved sheets.
+  rpc SaveSheet(SaveSheetRequest) returns (SaveSheetResponse);
+
   rpc ListTravelers(ListTravelersRequest) returns (ListTravelersResponse);
   rpc CreateTraveler(CreateTravelerRequest) returns (CreateTravelerResponse);
 
@@ -16,6 +24,13 @@ service TripExpensesService {
   // GetBalances returns what each traveler owes the others, before and after
   // offsetting debts between each pair.
   rpc GetBalances(GetBalancesRequest) returns (GetBalancesResponse);
+}
+
+message Sheet {
+  uint64 id = 1;
+  string name = 2;
+  // False while the sheet is a draft that was never saved.
+  bool saved = 3;
 }
 
 message Traveler {
@@ -43,13 +58,40 @@ message Debt {
   int64 amount = 3;
 }
 
-message ListTravelersRequest {}
+message ListSheetsRequest {}
+
+message ListSheetsResponse {
+  // Newest first.
+  repeated Sheet sheets = 1;
+}
+
+message CreateSheetRequest {
+  string name = 1;
+}
+
+message CreateSheetResponse {
+  Sheet sheet = 1;
+}
+
+message SaveSheetRequest {
+  uint64 id = 1;
+  string name = 2;
+}
+
+message SaveSheetResponse {
+  Sheet sheet = 1;
+}
+
+message ListTravelersRequest {
+  uint64 sheet_id = 1;
+}
 
 message ListTravelersResponse {
   repeated Traveler travelers = 1;
 }
 
 message CreateTravelerRequest {
+  uint64 sheet_id = 2;
   string name = 1;
 }
 
@@ -57,13 +99,16 @@ message CreateTravelerResponse {
   Traveler traveler = 1;
 }
 
-message ListExpensesRequest {}
+message ListExpensesRequest {
+  uint64 sheet_id = 1;
+}
 
 message ListExpensesResponse {
   repeated Expense expenses = 1;
 }
 
 message CreateExpenseRequest {
+  uint64 sheet_id = 4;
   string description = 1;
   uint64 payer_id = 2;
   repeated Share shares = 3;
@@ -79,7 +124,9 @@ message DeleteExpenseRequest {
 
 message DeleteExpenseResponse {}
 
-message GetBalancesRequest {}
+message GetBalancesRequest {
+  uint64 sheet_id = 1;
+}
 
 message GetBalancesResponse {
   // Every non-zero debt per pair and direction, summed over all expenses.
