@@ -2,3 +2,4 @@ bin/
 Dockerfile
 .dockerignore
 .env
+tmp/
