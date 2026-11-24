@@ -8,5 +8,6 @@ export default defineConfig({
     proxy: {
       "/tripexpenses.v1.TripExpensesService": "http://localhost:8080",
     },
+    port: 1604,
   },
 });
