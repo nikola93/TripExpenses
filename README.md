@@ -45,7 +45,7 @@ For hot reload, run only the database in Docker and the rest natively:
 # Database (needed by the backend)
 docker compose up -d db
 
-# Backend (http://localhost:8080/healthz), DATABASE_URL defaults to the compose database
+# Backend (http://localhost:8080/healthz), reads DATABASE_URL from backend/.env (copy .env.example)
 cd backend && go run ./cmd/server
 
 # Frontend (http://localhost:1604), proxies API calls to the backend

@@ -4,6 +4,8 @@ go 1.26.0
 
 require (
 	connectrpc.com/connect v1.21.1
+	github.com/caarlos0/env/v11 v11.4.2
+	github.com/joho/godotenv v1.5.1
 	google.golang.org/protobuf v1.36.12
 	gorm.io/driver/postgres v1.6.3
 	gorm.io/gorm v1.31.2
