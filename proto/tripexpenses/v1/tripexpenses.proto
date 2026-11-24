@@ -1,0 +1,89 @@
+syntax = "proto3";
+
+package tripexpenses.v1;
+
+option go_package = "github.com/nikola93/tripexpenses/backend/gen/tripexpenses/v1;tripexpensesv1";
+
+// TripExpensesService tracks shared trip expenses and works out who owes whom.
+service TripExpensesService {
+  rpc ListTravelers(ListTravelersRequest) returns (ListTravelersResponse);
+  rpc CreateTraveler(CreateTravelerRequest) returns (CreateTravelerResponse);
+
+  rpc ListExpenses(ListExpensesRequest) returns (ListExpensesResponse);
+  rpc CreateExpense(CreateExpenseRequest) returns (CreateExpenseResponse);
+  rpc DeleteExpense(DeleteExpenseRequest) returns (DeleteExpenseResponse);
+
+  // GetBalances returns what each traveler owes the others, before and after
+  // offsetting debts between each pair.
+  rpc GetBalances(GetBalancesRequest) returns (GetBalancesResponse);
+}
+
+message Traveler {
+  uint64 id = 1;
+  string name = 2;
+}
+
+// Share is the part of an expense that falls on one traveler.
+message Share {
+  uint64 traveler_id = 1;
+  int64 amount = 2;
+}
+
+message Expense {
+  uint64 id = 1;
+  string description = 2;
+  uint64 payer_id = 3;
+  repeated Share shares = 4;
+}
+
+// Debt says that from_traveler_id owes to_traveler_id the given amount.
+message Debt {
+  uint64 from_traveler_id = 1;
+  uint64 to_traveler_id = 2;
+  int64 amount = 3;
+}
+
+message ListTravelersRequest {}
+
+message ListTravelersResponse {
+  repeated Traveler travelers = 1;
+}
+
+message CreateTravelerRequest {
+  string name = 1;
+}
+
+message CreateTravelerResponse {
+  Traveler traveler = 1;
+}
+
+message ListExpensesRequest {}
+
+message ListExpensesResponse {
+  repeated Expense expenses = 1;
+}
+
+message CreateExpenseRequest {
+  string description = 1;
+  uint64 payer_id = 2;
+  repeated Share shares = 3;
+}
+
+message CreateExpenseResponse {
+  Expense expense = 1;
+}
+
+message DeleteExpenseRequest {
+  uint64 id = 1;
+}
+
+message DeleteExpenseResponse {}
+
+message GetBalancesRequest {}
+
+message GetBalancesResponse {
+  // Every non-zero debt per pair and direction, summed over all expenses.
+  repeated Debt gross = 1;
+  // Debts after offsetting each pair against each other.
+  repeated Debt net = 2;
+}
