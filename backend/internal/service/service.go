@@ -28,9 +28,42 @@ func New(gdb *gorm.DB) *Service {
 	return &Service{db: gdb}
 }
 
-func (s *Service) ListTravelers(ctx context.Context, _ *connect.Request[tev1.ListTravelersRequest]) (*connect.Response[tev1.ListTravelersResponse], error) {
+func (s *Service) ListSheets(ctx context.Context, _ *connect.Request[tev1.ListSheetsRequest]) (*connect.Response[tev1.ListSheetsResponse], error) {
+	var sheets []db.Sheet
+	if err := s.db.WithContext(ctx).Order("id DESC").Find(&sheets).Error; err != nil {
+		return nil, internal(err)
+	}
+	resp := &tev1.ListSheetsResponse{}
+	for _, sh := range sheets {
+		resp.Sheets = append(resp.Sheets, toSheetPB(sh))
+	}
+	return connect.NewResponse(resp), nil
+}
+
+func (s *Service) CreateSheet(ctx context.Context, req *connect.Request[tev1.CreateSheetRequest]) (*connect.Response[tev1.CreateSheetResponse], error) {
+	sh := db.Sheet{Name: strings.TrimSpace(req.Msg.GetName())}
+	if err := s.db.WithContext(ctx).Create(&sh).Error; err != nil {
+		return nil, internal(err)
+	}
+	return connect.NewResponse(&tev1.CreateSheetResponse{Sheet: toSheetPB(sh)}), nil
+}
+
+func (s *Service) SaveSheet(ctx context.Context, req *connect.Request[tev1.SaveSheetRequest]) (*connect.Response[tev1.SaveSheetResponse], error) {
+	sh, err := s.findSheet(ctx, req.Msg.GetId())
+	if err != nil {
+		return nil, err
+	}
+	sh.Name = strings.TrimSpace(req.Msg.GetName())
+	sh.Saved = true
+	if err := s.db.WithContext(ctx).Select("Name", "Saved").Updates(&sh).Error; err != nil {
+		return nil, internal(err)
+	}
+	return connect.NewResponse(&tev1.SaveSheetResponse{Sheet: toSheetPB(sh)}), nil
+}
+
+func (s *Service) ListTravelers(ctx context.Context, req *connect.Request[tev1.ListTravelersRequest]) (*connect.Response[tev1.ListTravelersResponse], error) {
 	var travelers []db.Traveler
-	if err := s.db.WithContext(ctx).Order("id").Find(&travelers).Error; err != nil {
+	if err := s.db.WithContext(ctx).Where("sheet_id = ?", req.Msg.GetSheetId()).Order("id").Find(&travelers).Error; err != nil {
 		return nil, internal(err)
 	}
 	resp := &tev1.ListTravelersResponse{}
@@ -45,7 +78,10 @@ func (s *Service) CreateTraveler(ctx context.Context, req *connect.Request[tev1.
 	if name == "" {
 		return nil, connect.NewError(connect.CodeInvalidArgument, errors.New("name is required"))
 	}
-	t := db.Traveler{Name: name}
+	if _, err := s.findSheet(ctx, req.Msg.GetSheetId()); err != nil {
+		return nil, err
+	}
+	t := db.Traveler{SheetID: req.Msg.GetSheetId(), Name: name}
 	if err := s.db.WithContext(ctx).Create(&t).Error; err != nil {
 		if errors.Is(err, gorm.ErrDuplicatedKey) {
 			return nil, connect.NewError(connect.CodeAlreadyExists, fmt.Errorf("traveler %q already exists", name))
@@ -55,8 +91,8 @@ func (s *Service) CreateTraveler(ctx context.Context, req *connect.Request[tev1.
 	return connect.NewResponse(&tev1.CreateTravelerResponse{Traveler: toTravelerPB(t)}), nil
 }
 
-func (s *Service) ListExpenses(ctx context.Context, _ *connect.Request[tev1.ListExpensesRequest]) (*connect.Response[tev1.ListExpensesResponse], error) {
-	expenses, err := s.loadExpenses(ctx)
+func (s *Service) ListExpenses(ctx context.Context, req *connect.Request[tev1.ListExpensesRequest]) (*connect.Response[tev1.ListExpensesResponse], error) {
+	expenses, err := s.loadExpenses(ctx, req.Msg.GetSheetId())
 	if err != nil {
 		return nil, internal(err)
 	}
@@ -72,6 +108,7 @@ func (s *Service) CreateExpense(ctx context.Context, req *connect.Request[tev1.C
 	ids := map[uint64]bool{msg.GetPayerId(): true}
 	seen := map[uint64]bool{}
 	e := db.Expense{
+		SheetID:     msg.GetSheetId(),
 		Description: strings.TrimSpace(msg.GetDescription()),
 		PayerID:     msg.GetPayerId(),
 	}
@@ -88,11 +125,11 @@ func (s *Service) CreateExpense(ctx context.Context, req *connect.Request[tev1.C
 	}
 
 	var known int64
-	if err := s.db.WithContext(ctx).Model(&db.Traveler{}).Where("id IN ?", keys(ids)).Count(&known).Error; err != nil {
+	if err := s.db.WithContext(ctx).Model(&db.Traveler{}).Where("sheet_id = ? AND id IN ?", msg.GetSheetId(), keys(ids)).Count(&known).Error; err != nil {
 		return nil, internal(err)
 	}
 	if known != int64(len(ids)) {
-		return nil, connect.NewError(connect.CodeInvalidArgument, errors.New("payer and shares must refer to existing travelers"))
+		return nil, connect.NewError(connect.CodeInvalidArgument, errors.New("payer and shares must refer to travelers of the sheet"))
 	}
 
 	if err := s.db.WithContext(ctx).Create(&e).Error; err != nil {
@@ -112,8 +149,8 @@ func (s *Service) DeleteExpense(ctx context.Context, req *connect.Request[tev1.D
 	return connect.NewResponse(&tev1.DeleteExpenseResponse{}), nil
 }
 
-func (s *Service) GetBalances(ctx context.Context, _ *connect.Request[tev1.GetBalancesRequest]) (*connect.Response[tev1.GetBalancesResponse], error) {
-	expenses, err := s.loadExpenses(ctx)
+func (s *Service) GetBalances(ctx context.Context, req *connect.Request[tev1.GetBalancesRequest]) (*connect.Response[tev1.GetBalancesResponse], error) {
+	expenses, err := s.loadExpenses(ctx, req.Msg.GetSheetId())
 	if err != nil {
 		return nil, internal(err)
 	}
@@ -132,13 +169,30 @@ func (s *Service) GetBalances(ctx context.Context, _ *connect.Request[tev1.GetBa
 	}), nil
 }
 
-func (s *Service) loadExpenses(ctx context.Context) ([]db.Expense, error) {
+// findSheet loads a sheet, or returns a NotFound error if there is none.
+func (s *Service) findSheet(ctx context.Context, id uint64) (db.Sheet, error) {
+	var sh db.Sheet
+	if err := s.db.WithContext(ctx).First(&sh, id).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return sh, connect.NewError(connect.CodeNotFound, fmt.Errorf("sheet %d not found", id))
+		}
+		return sh, internal(err)
+	}
+	return sh, nil
+}
+
+func (s *Service) loadExpenses(ctx context.Context, sheetID uint64) ([]db.Expense, error) {
 	var expenses []db.Expense
 	err := s.db.WithContext(ctx).
+		Where("sheet_id = ?", sheetID).
 		Preload("Shares", func(tx *gorm.DB) *gorm.DB { return tx.Order("traveler_id") }).
 		Order("id").
 		Find(&expenses).Error
 	return expenses, err
+}
+
+func toSheetPB(sh db.Sheet) *tev1.Sheet {
+	return &tev1.Sheet{Id: sh.ID, Name: sh.Name, Saved: sh.Saved}
 }
 
 func toTravelerPB(t db.Traveler) *tev1.Traveler {

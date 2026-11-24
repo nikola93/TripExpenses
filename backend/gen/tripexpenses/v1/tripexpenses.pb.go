@@ -21,6 +21,67 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type Sheet struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	Id    uint64                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name  string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	// False while the sheet is a draft that was never saved.
+	Saved         bool `protobuf:"varint,3,opt,name=saved,proto3" json:"saved,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Sheet) Reset() {
+	*x = Sheet{}
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Sheet) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Sheet) ProtoMessage() {}
+
+func (x *Sheet) ProtoReflect() protoreflect.Message {
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Sheet.ProtoReflect.Descriptor instead.
+func (*Sheet) Descriptor() ([]byte, []int) {
+	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *Sheet) GetId() uint64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *Sheet) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *Sheet) GetSaved() bool {
+	if x != nil {
+		return x.Saved
+	}
+	return false
+}
+
 type Traveler struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            uint64                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
@@ -31,7 +92,7 @@ type Traveler struct {
 
 func (x *Traveler) Reset() {
 	*x = Traveler{}
-	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[0]
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -43,7 +104,7 @@ func (x *Traveler) String() string {
 func (*Traveler) ProtoMessage() {}
 
 func (x *Traveler) ProtoReflect() protoreflect.Message {
-	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[0]
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56,7 +117,7 @@ func (x *Traveler) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Traveler.ProtoReflect.Descriptor instead.
 func (*Traveler) Descriptor() ([]byte, []int) {
-	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{0}
+	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *Traveler) GetId() uint64 {
@@ -84,7 +145,7 @@ type Share struct {
 
 func (x *Share) Reset() {
 	*x = Share{}
-	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[1]
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -96,7 +157,7 @@ func (x *Share) String() string {
 func (*Share) ProtoMessage() {}
 
 func (x *Share) ProtoReflect() protoreflect.Message {
-	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[1]
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -109,7 +170,7 @@ func (x *Share) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Share.ProtoReflect.Descriptor instead.
 func (*Share) Descriptor() ([]byte, []int) {
-	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{1}
+	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *Share) GetTravelerId() uint64 {
@@ -138,7 +199,7 @@ type Expense struct {
 
 func (x *Expense) Reset() {
 	*x = Expense{}
-	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[2]
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -150,7 +211,7 @@ func (x *Expense) String() string {
 func (*Expense) ProtoMessage() {}
 
 func (x *Expense) ProtoReflect() protoreflect.Message {
-	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[2]
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -163,7 +224,7 @@ func (x *Expense) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Expense.ProtoReflect.Descriptor instead.
 func (*Expense) Descriptor() ([]byte, []int) {
-	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{2}
+	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *Expense) GetId() uint64 {
@@ -206,7 +267,7 @@ type Debt struct {
 
 func (x *Debt) Reset() {
 	*x = Debt{}
-	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[3]
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -218,7 +279,7 @@ func (x *Debt) String() string {
 func (*Debt) ProtoMessage() {}
 
 func (x *Debt) ProtoReflect() protoreflect.Message {
-	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[3]
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -231,7 +292,7 @@ func (x *Debt) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Debt.ProtoReflect.Descriptor instead.
 func (*Debt) Descriptor() ([]byte, []int) {
-	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{3}
+	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *Debt) GetFromTravelerId() uint64 {
@@ -255,15 +316,281 @@ func (x *Debt) GetAmount() int64 {
 	return 0
 }
 
+type ListSheetsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListSheetsRequest) Reset() {
+	*x = ListSheetsRequest{}
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListSheetsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListSheetsRequest) ProtoMessage() {}
+
+func (x *ListSheetsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListSheetsRequest.ProtoReflect.Descriptor instead.
+func (*ListSheetsRequest) Descriptor() ([]byte, []int) {
+	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{5}
+}
+
+type ListSheetsResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Newest first.
+	Sheets        []*Sheet `protobuf:"bytes,1,rep,name=sheets,proto3" json:"sheets,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListSheetsResponse) Reset() {
+	*x = ListSheetsResponse{}
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListSheetsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListSheetsResponse) ProtoMessage() {}
+
+func (x *ListSheetsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListSheetsResponse.ProtoReflect.Descriptor instead.
+func (*ListSheetsResponse) Descriptor() ([]byte, []int) {
+	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *ListSheetsResponse) GetSheets() []*Sheet {
+	if x != nil {
+		return x.Sheets
+	}
+	return nil
+}
+
+type CreateSheetRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateSheetRequest) Reset() {
+	*x = CreateSheetRequest{}
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateSheetRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateSheetRequest) ProtoMessage() {}
+
+func (x *CreateSheetRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateSheetRequest.ProtoReflect.Descriptor instead.
+func (*CreateSheetRequest) Descriptor() ([]byte, []int) {
+	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *CreateSheetRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+type CreateSheetResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Sheet         *Sheet                 `protobuf:"bytes,1,opt,name=sheet,proto3" json:"sheet,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateSheetResponse) Reset() {
+	*x = CreateSheetResponse{}
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateSheetResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateSheetResponse) ProtoMessage() {}
+
+func (x *CreateSheetResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateSheetResponse.ProtoReflect.Descriptor instead.
+func (*CreateSheetResponse) Descriptor() ([]byte, []int) {
+	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *CreateSheetResponse) GetSheet() *Sheet {
+	if x != nil {
+		return x.Sheet
+	}
+	return nil
+}
+
+type SaveSheetRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            uint64                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SaveSheetRequest) Reset() {
+	*x = SaveSheetRequest{}
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SaveSheetRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SaveSheetRequest) ProtoMessage() {}
+
+func (x *SaveSheetRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SaveSheetRequest.ProtoReflect.Descriptor instead.
+func (*SaveSheetRequest) Descriptor() ([]byte, []int) {
+	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *SaveSheetRequest) GetId() uint64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *SaveSheetRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+type SaveSheetResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Sheet         *Sheet                 `protobuf:"bytes,1,opt,name=sheet,proto3" json:"sheet,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SaveSheetResponse) Reset() {
+	*x = SaveSheetResponse{}
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SaveSheetResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SaveSheetResponse) ProtoMessage() {}
+
+func (x *SaveSheetResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SaveSheetResponse.ProtoReflect.Descriptor instead.
+func (*SaveSheetResponse) Descriptor() ([]byte, []int) {
+	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *SaveSheetResponse) GetSheet() *Sheet {
+	if x != nil {
+		return x.Sheet
+	}
+	return nil
+}
+
 type ListTravelersRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
+	SheetId       uint64                 `protobuf:"varint,1,opt,name=sheet_id,json=sheetId,proto3" json:"sheet_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ListTravelersRequest) Reset() {
 	*x = ListTravelersRequest{}
-	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[4]
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -275,7 +602,7 @@ func (x *ListTravelersRequest) String() string {
 func (*ListTravelersRequest) ProtoMessage() {}
 
 func (x *ListTravelersRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[4]
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -288,7 +615,14 @@ func (x *ListTravelersRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListTravelersRequest.ProtoReflect.Descriptor instead.
 func (*ListTravelersRequest) Descriptor() ([]byte, []int) {
-	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{4}
+	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *ListTravelersRequest) GetSheetId() uint64 {
+	if x != nil {
+		return x.SheetId
+	}
+	return 0
 }
 
 type ListTravelersResponse struct {
@@ -300,7 +634,7 @@ type ListTravelersResponse struct {
 
 func (x *ListTravelersResponse) Reset() {
 	*x = ListTravelersResponse{}
-	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[5]
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -312,7 +646,7 @@ func (x *ListTravelersResponse) String() string {
 func (*ListTravelersResponse) ProtoMessage() {}
 
 func (x *ListTravelersResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[5]
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -325,7 +659,7 @@ func (x *ListTravelersResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListTravelersResponse.ProtoReflect.Descriptor instead.
 func (*ListTravelersResponse) Descriptor() ([]byte, []int) {
-	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{5}
+	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *ListTravelersResponse) GetTravelers() []*Traveler {
@@ -337,6 +671,7 @@ func (x *ListTravelersResponse) GetTravelers() []*Traveler {
 
 type CreateTravelerRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
+	SheetId       uint64                 `protobuf:"varint,2,opt,name=sheet_id,json=sheetId,proto3" json:"sheet_id,omitempty"`
 	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -344,7 +679,7 @@ type CreateTravelerRequest struct {
 
 func (x *CreateTravelerRequest) Reset() {
 	*x = CreateTravelerRequest{}
-	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[6]
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -356,7 +691,7 @@ func (x *CreateTravelerRequest) String() string {
 func (*CreateTravelerRequest) ProtoMessage() {}
 
 func (x *CreateTravelerRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[6]
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -369,7 +704,14 @@ func (x *CreateTravelerRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateTravelerRequest.ProtoReflect.Descriptor instead.
 func (*CreateTravelerRequest) Descriptor() ([]byte, []int) {
-	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{6}
+	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *CreateTravelerRequest) GetSheetId() uint64 {
+	if x != nil {
+		return x.SheetId
+	}
+	return 0
 }
 
 func (x *CreateTravelerRequest) GetName() string {
@@ -388,7 +730,7 @@ type CreateTravelerResponse struct {
 
 func (x *CreateTravelerResponse) Reset() {
 	*x = CreateTravelerResponse{}
-	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[7]
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -400,7 +742,7 @@ func (x *CreateTravelerResponse) String() string {
 func (*CreateTravelerResponse) ProtoMessage() {}
 
 func (x *CreateTravelerResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[7]
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -413,7 +755,7 @@ func (x *CreateTravelerResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateTravelerResponse.ProtoReflect.Descriptor instead.
 func (*CreateTravelerResponse) Descriptor() ([]byte, []int) {
-	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{7}
+	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *CreateTravelerResponse) GetTraveler() *Traveler {
@@ -425,13 +767,14 @@ func (x *CreateTravelerResponse) GetTraveler() *Traveler {
 
 type ListExpensesRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
+	SheetId       uint64                 `protobuf:"varint,1,opt,name=sheet_id,json=sheetId,proto3" json:"sheet_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ListExpensesRequest) Reset() {
 	*x = ListExpensesRequest{}
-	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[8]
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -443,7 +786,7 @@ func (x *ListExpensesRequest) String() string {
 func (*ListExpensesRequest) ProtoMessage() {}
 
 func (x *ListExpensesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[8]
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -456,7 +799,14 @@ func (x *ListExpensesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListExpensesRequest.ProtoReflect.Descriptor instead.
 func (*ListExpensesRequest) Descriptor() ([]byte, []int) {
-	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{8}
+	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *ListExpensesRequest) GetSheetId() uint64 {
+	if x != nil {
+		return x.SheetId
+	}
+	return 0
 }
 
 type ListExpensesResponse struct {
@@ -468,7 +818,7 @@ type ListExpensesResponse struct {
 
 func (x *ListExpensesResponse) Reset() {
 	*x = ListExpensesResponse{}
-	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[9]
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -480,7 +830,7 @@ func (x *ListExpensesResponse) String() string {
 func (*ListExpensesResponse) ProtoMessage() {}
 
 func (x *ListExpensesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[9]
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -493,7 +843,7 @@ func (x *ListExpensesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListExpensesResponse.ProtoReflect.Descriptor instead.
 func (*ListExpensesResponse) Descriptor() ([]byte, []int) {
-	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{9}
+	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *ListExpensesResponse) GetExpenses() []*Expense {
@@ -505,6 +855,7 @@ func (x *ListExpensesResponse) GetExpenses() []*Expense {
 
 type CreateExpenseRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
+	SheetId       uint64                 `protobuf:"varint,4,opt,name=sheet_id,json=sheetId,proto3" json:"sheet_id,omitempty"`
 	Description   string                 `protobuf:"bytes,1,opt,name=description,proto3" json:"description,omitempty"`
 	PayerId       uint64                 `protobuf:"varint,2,opt,name=payer_id,json=payerId,proto3" json:"payer_id,omitempty"`
 	Shares        []*Share               `protobuf:"bytes,3,rep,name=shares,proto3" json:"shares,omitempty"`
@@ -514,7 +865,7 @@ type CreateExpenseRequest struct {
 
 func (x *CreateExpenseRequest) Reset() {
 	*x = CreateExpenseRequest{}
-	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[10]
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -526,7 +877,7 @@ func (x *CreateExpenseRequest) String() string {
 func (*CreateExpenseRequest) ProtoMessage() {}
 
 func (x *CreateExpenseRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[10]
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -539,7 +890,14 @@ func (x *CreateExpenseRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateExpenseRequest.ProtoReflect.Descriptor instead.
 func (*CreateExpenseRequest) Descriptor() ([]byte, []int) {
-	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{10}
+	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *CreateExpenseRequest) GetSheetId() uint64 {
+	if x != nil {
+		return x.SheetId
+	}
+	return 0
 }
 
 func (x *CreateExpenseRequest) GetDescription() string {
@@ -572,7 +930,7 @@ type CreateExpenseResponse struct {
 
 func (x *CreateExpenseResponse) Reset() {
 	*x = CreateExpenseResponse{}
-	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[11]
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -584,7 +942,7 @@ func (x *CreateExpenseResponse) String() string {
 func (*CreateExpenseResponse) ProtoMessage() {}
 
 func (x *CreateExpenseResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[11]
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -597,7 +955,7 @@ func (x *CreateExpenseResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateExpenseResponse.ProtoReflect.Descriptor instead.
 func (*CreateExpenseResponse) Descriptor() ([]byte, []int) {
-	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{11}
+	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *CreateExpenseResponse) GetExpense() *Expense {
@@ -616,7 +974,7 @@ type DeleteExpenseRequest struct {
 
 func (x *DeleteExpenseRequest) Reset() {
 	*x = DeleteExpenseRequest{}
-	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[12]
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -628,7 +986,7 @@ func (x *DeleteExpenseRequest) String() string {
 func (*DeleteExpenseRequest) ProtoMessage() {}
 
 func (x *DeleteExpenseRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[12]
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -641,7 +999,7 @@ func (x *DeleteExpenseRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteExpenseRequest.ProtoReflect.Descriptor instead.
 func (*DeleteExpenseRequest) Descriptor() ([]byte, []int) {
-	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{12}
+	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *DeleteExpenseRequest) GetId() uint64 {
@@ -659,7 +1017,7 @@ type DeleteExpenseResponse struct {
 
 func (x *DeleteExpenseResponse) Reset() {
 	*x = DeleteExpenseResponse{}
-	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[13]
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -671,7 +1029,7 @@ func (x *DeleteExpenseResponse) String() string {
 func (*DeleteExpenseResponse) ProtoMessage() {}
 
 func (x *DeleteExpenseResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[13]
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -684,18 +1042,19 @@ func (x *DeleteExpenseResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteExpenseResponse.ProtoReflect.Descriptor instead.
 func (*DeleteExpenseResponse) Descriptor() ([]byte, []int) {
-	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{13}
+	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{20}
 }
 
 type GetBalancesRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
+	SheetId       uint64                 `protobuf:"varint,1,opt,name=sheet_id,json=sheetId,proto3" json:"sheet_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *GetBalancesRequest) Reset() {
 	*x = GetBalancesRequest{}
-	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[14]
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -707,7 +1066,7 @@ func (x *GetBalancesRequest) String() string {
 func (*GetBalancesRequest) ProtoMessage() {}
 
 func (x *GetBalancesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[14]
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -720,7 +1079,14 @@ func (x *GetBalancesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetBalancesRequest.ProtoReflect.Descriptor instead.
 func (*GetBalancesRequest) Descriptor() ([]byte, []int) {
-	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{14}
+	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *GetBalancesRequest) GetSheetId() uint64 {
+	if x != nil {
+		return x.SheetId
+	}
+	return 0
 }
 
 type GetBalancesResponse struct {
@@ -735,7 +1101,7 @@ type GetBalancesResponse struct {
 
 func (x *GetBalancesResponse) Reset() {
 	*x = GetBalancesResponse{}
-	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[15]
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -747,7 +1113,7 @@ func (x *GetBalancesResponse) String() string {
 func (*GetBalancesResponse) ProtoMessage() {}
 
 func (x *GetBalancesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[15]
+	mi := &file_tripexpenses_v1_tripexpenses_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -760,7 +1126,7 @@ func (x *GetBalancesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetBalancesResponse.ProtoReflect.Descriptor instead.
 func (*GetBalancesResponse) Descriptor() ([]byte, []int) {
-	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{15}
+	return file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *GetBalancesResponse) GetGross() []*Debt {
@@ -781,7 +1147,11 @@ var File_tripexpenses_v1_tripexpenses_proto protoreflect.FileDescriptor
 
 const file_tripexpenses_v1_tripexpenses_proto_rawDesc = "" +
 	"\n" +
-	"\"tripexpenses/v1/tripexpenses.proto\x12\x0ftripexpenses.v1\".\n" +
+	"\"tripexpenses/v1/tripexpenses.proto\x12\x0ftripexpenses.v1\"A\n" +
+	"\x05Sheet\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x04R\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x14\n" +
+	"\x05saved\x18\x03 \x01(\bR\x05saved\".\n" +
 	"\bTraveler\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x04R\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\"@\n" +
@@ -797,18 +1167,34 @@ const file_tripexpenses_v1_tripexpenses_proto_rawDesc = "" +
 	"\x04Debt\x12(\n" +
 	"\x10from_traveler_id\x18\x01 \x01(\x04R\x0efromTravelerId\x12$\n" +
 	"\x0eto_traveler_id\x18\x02 \x01(\x04R\ftoTravelerId\x12\x16\n" +
-	"\x06amount\x18\x03 \x01(\x03R\x06amount\"\x16\n" +
-	"\x14ListTravelersRequest\"P\n" +
+	"\x06amount\x18\x03 \x01(\x03R\x06amount\"\x13\n" +
+	"\x11ListSheetsRequest\"D\n" +
+	"\x12ListSheetsResponse\x12.\n" +
+	"\x06sheets\x18\x01 \x03(\v2\x16.tripexpenses.v1.SheetR\x06sheets\"(\n" +
+	"\x12CreateSheetRequest\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\"C\n" +
+	"\x13CreateSheetResponse\x12,\n" +
+	"\x05sheet\x18\x01 \x01(\v2\x16.tripexpenses.v1.SheetR\x05sheet\"6\n" +
+	"\x10SaveSheetRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x04R\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\"A\n" +
+	"\x11SaveSheetResponse\x12,\n" +
+	"\x05sheet\x18\x01 \x01(\v2\x16.tripexpenses.v1.SheetR\x05sheet\"1\n" +
+	"\x14ListTravelersRequest\x12\x19\n" +
+	"\bsheet_id\x18\x01 \x01(\x04R\asheetId\"P\n" +
 	"\x15ListTravelersResponse\x127\n" +
-	"\ttravelers\x18\x01 \x03(\v2\x19.tripexpenses.v1.TravelerR\ttravelers\"+\n" +
-	"\x15CreateTravelerRequest\x12\x12\n" +
+	"\ttravelers\x18\x01 \x03(\v2\x19.tripexpenses.v1.TravelerR\ttravelers\"F\n" +
+	"\x15CreateTravelerRequest\x12\x19\n" +
+	"\bsheet_id\x18\x02 \x01(\x04R\asheetId\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\"O\n" +
 	"\x16CreateTravelerResponse\x125\n" +
-	"\btraveler\x18\x01 \x01(\v2\x19.tripexpenses.v1.TravelerR\btraveler\"\x15\n" +
-	"\x13ListExpensesRequest\"L\n" +
+	"\btraveler\x18\x01 \x01(\v2\x19.tripexpenses.v1.TravelerR\btraveler\"0\n" +
+	"\x13ListExpensesRequest\x12\x19\n" +
+	"\bsheet_id\x18\x01 \x01(\x04R\asheetId\"L\n" +
 	"\x14ListExpensesResponse\x124\n" +
-	"\bexpenses\x18\x01 \x03(\v2\x18.tripexpenses.v1.ExpenseR\bexpenses\"\x83\x01\n" +
-	"\x14CreateExpenseRequest\x12 \n" +
+	"\bexpenses\x18\x01 \x03(\v2\x18.tripexpenses.v1.ExpenseR\bexpenses\"\x9e\x01\n" +
+	"\x14CreateExpenseRequest\x12\x19\n" +
+	"\bsheet_id\x18\x04 \x01(\x04R\asheetId\x12 \n" +
 	"\vdescription\x18\x01 \x01(\tR\vdescription\x12\x19\n" +
 	"\bpayer_id\x18\x02 \x01(\x04R\apayerId\x12.\n" +
 	"\x06shares\x18\x03 \x03(\v2\x16.tripexpenses.v1.ShareR\x06shares\"K\n" +
@@ -816,12 +1202,17 @@ const file_tripexpenses_v1_tripexpenses_proto_rawDesc = "" +
 	"\aexpense\x18\x01 \x01(\v2\x18.tripexpenses.v1.ExpenseR\aexpense\"&\n" +
 	"\x14DeleteExpenseRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x04R\x02id\"\x17\n" +
-	"\x15DeleteExpenseResponse\"\x14\n" +
-	"\x12GetBalancesRequest\"k\n" +
+	"\x15DeleteExpenseResponse\"/\n" +
+	"\x12GetBalancesRequest\x12\x19\n" +
+	"\bsheet_id\x18\x01 \x01(\x04R\asheetId\"k\n" +
 	"\x13GetBalancesResponse\x12+\n" +
 	"\x05gross\x18\x01 \x03(\v2\x15.tripexpenses.v1.DebtR\x05gross\x12'\n" +
-	"\x03net\x18\x02 \x03(\v2\x15.tripexpenses.v1.DebtR\x03net2\xcf\x04\n" +
-	"\x13TripExpensesService\x12^\n" +
+	"\x03net\x18\x02 \x03(\v2\x15.tripexpenses.v1.DebtR\x03net2\xd4\x06\n" +
+	"\x13TripExpensesService\x12U\n" +
+	"\n" +
+	"ListSheets\x12\".tripexpenses.v1.ListSheetsRequest\x1a#.tripexpenses.v1.ListSheetsResponse\x12X\n" +
+	"\vCreateSheet\x12#.tripexpenses.v1.CreateSheetRequest\x1a$.tripexpenses.v1.CreateSheetResponse\x12R\n" +
+	"\tSaveSheet\x12!.tripexpenses.v1.SaveSheetRequest\x1a\".tripexpenses.v1.SaveSheetResponse\x12^\n" +
 	"\rListTravelers\x12%.tripexpenses.v1.ListTravelersRequest\x1a&.tripexpenses.v1.ListTravelersResponse\x12a\n" +
 	"\x0eCreateTraveler\x12&.tripexpenses.v1.CreateTravelerRequest\x1a'.tripexpenses.v1.CreateTravelerResponse\x12[\n" +
 	"\fListExpenses\x12$.tripexpenses.v1.ListExpensesRequest\x1a%.tripexpenses.v1.ListExpensesResponse\x12^\n" +
@@ -841,51 +1232,67 @@ func file_tripexpenses_v1_tripexpenses_proto_rawDescGZIP() []byte {
 	return file_tripexpenses_v1_tripexpenses_proto_rawDescData
 }
 
-var file_tripexpenses_v1_tripexpenses_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
+var file_tripexpenses_v1_tripexpenses_proto_msgTypes = make([]protoimpl.MessageInfo, 23)
 var file_tripexpenses_v1_tripexpenses_proto_goTypes = []any{
-	(*Traveler)(nil),               // 0: tripexpenses.v1.Traveler
-	(*Share)(nil),                  // 1: tripexpenses.v1.Share
-	(*Expense)(nil),                // 2: tripexpenses.v1.Expense
-	(*Debt)(nil),                   // 3: tripexpenses.v1.Debt
-	(*ListTravelersRequest)(nil),   // 4: tripexpenses.v1.ListTravelersRequest
-	(*ListTravelersResponse)(nil),  // 5: tripexpenses.v1.ListTravelersResponse
-	(*CreateTravelerRequest)(nil),  // 6: tripexpenses.v1.CreateTravelerRequest
-	(*CreateTravelerResponse)(nil), // 7: tripexpenses.v1.CreateTravelerResponse
-	(*ListExpensesRequest)(nil),    // 8: tripexpenses.v1.ListExpensesRequest
-	(*ListExpensesResponse)(nil),   // 9: tripexpenses.v1.ListExpensesResponse
-	(*CreateExpenseRequest)(nil),   // 10: tripexpenses.v1.CreateExpenseRequest
-	(*CreateExpenseResponse)(nil),  // 11: tripexpenses.v1.CreateExpenseResponse
-	(*DeleteExpenseRequest)(nil),   // 12: tripexpenses.v1.DeleteExpenseRequest
-	(*DeleteExpenseResponse)(nil),  // 13: tripexpenses.v1.DeleteExpenseResponse
-	(*GetBalancesRequest)(nil),     // 14: tripexpenses.v1.GetBalancesRequest
-	(*GetBalancesResponse)(nil),    // 15: tripexpenses.v1.GetBalancesResponse
+	(*Sheet)(nil),                  // 0: tripexpenses.v1.Sheet
+	(*Traveler)(nil),               // 1: tripexpenses.v1.Traveler
+	(*Share)(nil),                  // 2: tripexpenses.v1.Share
+	(*Expense)(nil),                // 3: tripexpenses.v1.Expense
+	(*Debt)(nil),                   // 4: tripexpenses.v1.Debt
+	(*ListSheetsRequest)(nil),      // 5: tripexpenses.v1.ListSheetsRequest
+	(*ListSheetsResponse)(nil),     // 6: tripexpenses.v1.ListSheetsResponse
+	(*CreateSheetRequest)(nil),     // 7: tripexpenses.v1.CreateSheetRequest
+	(*CreateSheetResponse)(nil),    // 8: tripexpenses.v1.CreateSheetResponse
+	(*SaveSheetRequest)(nil),       // 9: tripexpenses.v1.SaveSheetRequest
+	(*SaveSheetResponse)(nil),      // 10: tripexpenses.v1.SaveSheetResponse
+	(*ListTravelersRequest)(nil),   // 11: tripexpenses.v1.ListTravelersRequest
+	(*ListTravelersResponse)(nil),  // 12: tripexpenses.v1.ListTravelersResponse
+	(*CreateTravelerRequest)(nil),  // 13: tripexpenses.v1.CreateTravelerRequest
+	(*CreateTravelerResponse)(nil), // 14: tripexpenses.v1.CreateTravelerResponse
+	(*ListExpensesRequest)(nil),    // 15: tripexpenses.v1.ListExpensesRequest
+	(*ListExpensesResponse)(nil),   // 16: tripexpenses.v1.ListExpensesResponse
+	(*CreateExpenseRequest)(nil),   // 17: tripexpenses.v1.CreateExpenseRequest
+	(*CreateExpenseResponse)(nil),  // 18: tripexpenses.v1.CreateExpenseResponse
+	(*DeleteExpenseRequest)(nil),   // 19: tripexpenses.v1.DeleteExpenseRequest
+	(*DeleteExpenseResponse)(nil),  // 20: tripexpenses.v1.DeleteExpenseResponse
+	(*GetBalancesRequest)(nil),     // 21: tripexpenses.v1.GetBalancesRequest
+	(*GetBalancesResponse)(nil),    // 22: tripexpenses.v1.GetBalancesResponse
 }
 var file_tripexpenses_v1_tripexpenses_proto_depIdxs = []int32{
-	1,  // 0: tripexpenses.v1.Expense.shares:type_name -> tripexpenses.v1.Share
-	0,  // 1: tripexpenses.v1.ListTravelersResponse.travelers:type_name -> tripexpenses.v1.Traveler
-	0,  // 2: tripexpenses.v1.CreateTravelerResponse.traveler:type_name -> tripexpenses.v1.Traveler
-	2,  // 3: tripexpenses.v1.ListExpensesResponse.expenses:type_name -> tripexpenses.v1.Expense
-	1,  // 4: tripexpenses.v1.CreateExpenseRequest.shares:type_name -> tripexpenses.v1.Share
-	2,  // 5: tripexpenses.v1.CreateExpenseResponse.expense:type_name -> tripexpenses.v1.Expense
-	3,  // 6: tripexpenses.v1.GetBalancesResponse.gross:type_name -> tripexpenses.v1.Debt
-	3,  // 7: tripexpenses.v1.GetBalancesResponse.net:type_name -> tripexpenses.v1.Debt
-	4,  // 8: tripexpenses.v1.TripExpensesService.ListTravelers:input_type -> tripexpenses.v1.ListTravelersRequest
-	6,  // 9: tripexpenses.v1.TripExpensesService.CreateTraveler:input_type -> tripexpenses.v1.CreateTravelerRequest
-	8,  // 10: tripexpenses.v1.TripExpensesService.ListExpenses:input_type -> tripexpenses.v1.ListExpensesRequest
-	10, // 11: tripexpenses.v1.TripExpensesService.CreateExpense:input_type -> tripexpenses.v1.CreateExpenseRequest
-	12, // 12: tripexpenses.v1.TripExpensesService.DeleteExpense:input_type -> tripexpenses.v1.DeleteExpenseRequest
-	14, // 13: tripexpenses.v1.TripExpensesService.GetBalances:input_type -> tripexpenses.v1.GetBalancesRequest
-	5,  // 14: tripexpenses.v1.TripExpensesService.ListTravelers:output_type -> tripexpenses.v1.ListTravelersResponse
-	7,  // 15: tripexpenses.v1.TripExpensesService.CreateTraveler:output_type -> tripexpenses.v1.CreateTravelerResponse
-	9,  // 16: tripexpenses.v1.TripExpensesService.ListExpenses:output_type -> tripexpenses.v1.ListExpensesResponse
-	11, // 17: tripexpenses.v1.TripExpensesService.CreateExpense:output_type -> tripexpenses.v1.CreateExpenseResponse
-	13, // 18: tripexpenses.v1.TripExpensesService.DeleteExpense:output_type -> tripexpenses.v1.DeleteExpenseResponse
-	15, // 19: tripexpenses.v1.TripExpensesService.GetBalances:output_type -> tripexpenses.v1.GetBalancesResponse
-	14, // [14:20] is the sub-list for method output_type
-	8,  // [8:14] is the sub-list for method input_type
-	8,  // [8:8] is the sub-list for extension type_name
-	8,  // [8:8] is the sub-list for extension extendee
-	0,  // [0:8] is the sub-list for field type_name
+	2,  // 0: tripexpenses.v1.Expense.shares:type_name -> tripexpenses.v1.Share
+	0,  // 1: tripexpenses.v1.ListSheetsResponse.sheets:type_name -> tripexpenses.v1.Sheet
+	0,  // 2: tripexpenses.v1.CreateSheetResponse.sheet:type_name -> tripexpenses.v1.Sheet
+	0,  // 3: tripexpenses.v1.SaveSheetResponse.sheet:type_name -> tripexpenses.v1.Sheet
+	1,  // 4: tripexpenses.v1.ListTravelersResponse.travelers:type_name -> tripexpenses.v1.Traveler
+	1,  // 5: tripexpenses.v1.CreateTravelerResponse.traveler:type_name -> tripexpenses.v1.Traveler
+	3,  // 6: tripexpenses.v1.ListExpensesResponse.expenses:type_name -> tripexpenses.v1.Expense
+	2,  // 7: tripexpenses.v1.CreateExpenseRequest.shares:type_name -> tripexpenses.v1.Share
+	3,  // 8: tripexpenses.v1.CreateExpenseResponse.expense:type_name -> tripexpenses.v1.Expense
+	4,  // 9: tripexpenses.v1.GetBalancesResponse.gross:type_name -> tripexpenses.v1.Debt
+	4,  // 10: tripexpenses.v1.GetBalancesResponse.net:type_name -> tripexpenses.v1.Debt
+	5,  // 11: tripexpenses.v1.TripExpensesService.ListSheets:input_type -> tripexpenses.v1.ListSheetsRequest
+	7,  // 12: tripexpenses.v1.TripExpensesService.CreateSheet:input_type -> tripexpenses.v1.CreateSheetRequest
+	9,  // 13: tripexpenses.v1.TripExpensesService.SaveSheet:input_type -> tripexpenses.v1.SaveSheetRequest
+	11, // 14: tripexpenses.v1.TripExpensesService.ListTravelers:input_type -> tripexpenses.v1.ListTravelersRequest
+	13, // 15: tripexpenses.v1.TripExpensesService.CreateTraveler:input_type -> tripexpenses.v1.CreateTravelerRequest
+	15, // 16: tripexpenses.v1.TripExpensesService.ListExpenses:input_type -> tripexpenses.v1.ListExpensesRequest
+	17, // 17: tripexpenses.v1.TripExpensesService.CreateExpense:input_type -> tripexpenses.v1.CreateExpenseRequest
+	19, // 18: tripexpenses.v1.TripExpensesService.DeleteExpense:input_type -> tripexpenses.v1.DeleteExpenseRequest
+	21, // 19: tripexpenses.v1.TripExpensesService.GetBalances:input_type -> tripexpenses.v1.GetBalancesRequest
+	6,  // 20: tripexpenses.v1.TripExpensesService.ListSheets:output_type -> tripexpenses.v1.ListSheetsResponse
+	8,  // 21: tripexpenses.v1.TripExpensesService.CreateSheet:output_type -> tripexpenses.v1.CreateSheetResponse
+	10, // 22: tripexpenses.v1.TripExpensesService.SaveSheet:output_type -> tripexpenses.v1.SaveSheetResponse
+	12, // 23: tripexpenses.v1.TripExpensesService.ListTravelers:output_type -> tripexpenses.v1.ListTravelersResponse
+	14, // 24: tripexpenses.v1.TripExpensesService.CreateTraveler:output_type -> tripexpenses.v1.CreateTravelerResponse
+	16, // 25: tripexpenses.v1.TripExpensesService.ListExpenses:output_type -> tripexpenses.v1.ListExpensesResponse
+	18, // 26: tripexpenses.v1.TripExpensesService.CreateExpense:output_type -> tripexpenses.v1.CreateExpenseResponse
+	20, // 27: tripexpenses.v1.TripExpensesService.DeleteExpense:output_type -> tripexpenses.v1.DeleteExpenseResponse
+	22, // 28: tripexpenses.v1.TripExpensesService.GetBalances:output_type -> tripexpenses.v1.GetBalancesResponse
+	20, // [20:29] is the sub-list for method output_type
+	11, // [11:20] is the sub-list for method input_type
+	11, // [11:11] is the sub-list for extension type_name
+	11, // [11:11] is the sub-list for extension extendee
+	0,  // [0:11] is the sub-list for field type_name
 }
 
 func init() { file_tripexpenses_v1_tripexpenses_proto_init() }
@@ -899,7 +1306,7 @@ func file_tripexpenses_v1_tripexpenses_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_tripexpenses_v1_tripexpenses_proto_rawDesc), len(file_tripexpenses_v1_tripexpenses_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   16,
+			NumMessages:   23,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

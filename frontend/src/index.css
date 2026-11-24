@@ -1,27 +1,42 @@
-body {
-  font-family: system-ui, sans-serif;
-  margin: 2rem;
+@import "tailwindcss";
+
+/* Shared look for plain form and table elements, so the markup only needs
+   utilities for layout. */
+@layer base {
+  h1 {
+    @apply mb-6 text-3xl font-bold;
+  }
+
+  h2 {
+    @apply mb-3 text-xl font-semibold;
+  }
+
+  th,
+  td {
+    @apply border border-gray-300 px-2.5 py-1 text-left;
+  }
+
+  th {
+    @apply bg-gray-50 font-semibold;
+  }
+
+  input,
+  select {
+    @apply rounded border border-gray-300 bg-white px-2 py-1 focus:border-blue-500 focus:outline-none;
+  }
+
+  input[type="number"] {
+    @apply w-24;
+  }
+
+  button {
+    @apply cursor-pointer rounded border border-gray-300 bg-white px-3 py-1 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white;
+  }
 }
 
-section {
-  margin-bottom: 2.5rem;
-}
-
-table {
-  border-collapse: collapse;
-}
-
-th,
-td {
-  border: 1px solid #ccc;
-  padding: 0.3rem 0.6rem;
-  text-align: left;
-}
-
-input[type="number"] {
-  width: 6rem;
-}
-
-.error {
-  color: #b00020;
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    margin-bottom: -0.5rem;
+  }
 }

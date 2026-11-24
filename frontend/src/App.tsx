@@ -1,25 +1,61 @@
-import { FormEvent, useCallback, useEffect, useState } from "react";
+import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { ConnectError } from "@connectrpc/connect";
 import { client } from "./api";
 import type {
   Debt,
   Expense,
+  Sheet,
   Traveler,
 } from "./gen/tripexpenses/v1/tripexpenses_pb";
 
+const sheetTitle = (s: Sheet) => s.name || `Trošak #${s.id}`;
+
 export default function App() {
+  const [sheets, setSheets] = useState<Sheet[]>([]);
+  // The sheet shown in the main area; null means a new one not created yet.
+  const [sheetId, setSheetId] = useState<bigint | null>(null);
+  // Set when the current sheet was created in this visit, to offer naming it.
+  const [justCreated, setJustCreated] = useState(false);
   const [travelers, setTravelers] = useState<Traveler[]>([]);
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [gross, setGross] = useState<Debt[]>([]);
   const [net, setNet] = useState<Debt[]>([]);
   const [error, setError] = useState("");
+  const [toast, setToast] = useState("");
 
-  const reload = useCallback(async () => {
+  // Hides the toast a few seconds after it was shown.
+  useEffect(() => {
+    if (!toast) return;
+    const timer = setTimeout(() => setToast(""), 3000);
+    return () => clearTimeout(timer);
+  }, [toast]);
+
+  const sheet = sheets.find((s) => s.id === sheetId);
+
+  // On first load, open the newest sheet, saved or not.
+  useEffect(() => {
+    client
+      .listSheets({})
+      .then((r) => {
+        setSheets(r.sheets);
+        if (r.sheets.length > 0) setSheetId(r.sheets[0].id);
+      })
+      .catch((err) => setError(ConnectError.from(err).message));
+  }, []);
+
+  const load = useCallback(async (id: bigint | null) => {
+    if (id === null) {
+      setTravelers([]);
+      setExpenses([]);
+      setGross([]);
+      setNet([]);
+      return;
+    }
     try {
       const [t, e, b] = await Promise.all([
-        client.listTravelers({}),
-        client.listExpenses({}),
-        client.getBalances({}),
+        client.listTravelers({ sheetId: id }),
+        client.listExpenses({ sheetId: id }),
+        client.getBalances({ sheetId: id }),
       ]);
       setTravelers(t.travelers);
       setExpenses(e.expenses);
@@ -32,45 +68,196 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    void reload();
-  }, [reload]);
+    void load(sheetId);
+  }, [load, sheetId]);
 
-  // Runs an API call, shows its error if any, then refreshes all data.
-  const run = async (call: () => Promise<unknown>) => {
+  // Runs an API call, shows its error if any, then refreshes the sheet's data.
+  const run = async (call: () => Promise<unknown>, id = sheetId) => {
     try {
       await call();
     } catch (err) {
       setError(ConnectError.from(err).message);
       return;
     }
-    await reload();
+    await load(id);
+  };
+
+  // Adds a traveler, first creating the sheet if this is a new one.
+  const addTraveler = async (name: string) => {
+    let id = sheetId;
+    if (id === null) {
+      try {
+        const { sheet } = await client.createSheet({});
+        if (!sheet) return;
+        id = sheet.id;
+        setSheets([sheet, ...sheets]);
+        setSheetId(id);
+        setJustCreated(true);
+      } catch (err) {
+        setError(ConnectError.from(err).message);
+        return;
+      }
+    }
+    const target = id;
+    await run(() => client.createTraveler({ sheetId: target, name }), target);
+  };
+
+  const saveSheet = async (name: string) => {
+    if (sheetId === null) return;
+    try {
+      const { sheet: saved } = await client.saveSheet({ id: sheetId, name });
+      if (!saved) return;
+      setSheets(sheets.map((s) => (s.id === saved.id ? saved : s)));
+      setError("");
+      setToast(`Trošak „${sheetTitle(saved)}“ je sačuvan.`);
+    } catch (err) {
+      setError(ConnectError.from(err).message);
+    }
+  };
+
+  const openSheet = (id: bigint | null) => {
+    setSheetId(id);
+    setJustCreated(false);
+    setError("");
   };
 
   const nameOf = (id: bigint) =>
     travelers.find((t) => t.id === id)?.name ?? `#${id}`;
 
   return (
-    <main>
-      <h1>Troškovi puta</h1>
-      {error && <p className="error">{error}</p>}
-      <Travelers
-        travelers={travelers}
-        onAdd={(name) => run(() => client.createTraveler({ name }))}
-      />
-      {travelers.length > 0 && (
-        <>
-          <Expenses
-            travelers={travelers}
-            expenses={expenses}
-            nameOf={nameOf}
-            onAdd={(req) => run(() => client.createExpense(req))}
-            onDelete={(id) => run(() => client.deleteExpense({ id }))}
+    <div className="flex min-h-screen font-sans text-gray-900">
+      <main className="min-w-0 flex-1 overflow-x-auto p-8">
+        <h1>Troškovi puta</h1>
+        {sheet && (
+          <SaveSheet
+            key={sheet.id.toString()}
+            sheet={sheet}
+            autoFocus={justCreated}
+            onSave={saveSheet}
           />
-          <DueMatrix travelers={travelers} gross={gross} />
-          <NetDebts net={net} nameOf={nameOf} />
-        </>
+        )}
+        {error && <p className="mb-4 text-red-700">{error}</p>}
+        <Travelers travelers={travelers} onAdd={addTraveler} />
+        {travelers.length > 0 && (
+          <>
+            <Expenses
+              travelers={travelers}
+              expenses={expenses}
+              nameOf={nameOf}
+              onAdd={(req) =>
+                run(() => client.createExpense({ ...req, sheetId: sheetId! }))
+              }
+              onDelete={(id) => run(() => client.deleteExpense({ id }))}
+            />
+            <DueMatrix travelers={travelers} gross={gross} />
+            <NetDebts net={net} nameOf={nameOf} />
+          </>
+        )}
+      </main>
+      <SavedSheets
+        sheets={sheets.filter((s) => s.saved)}
+        currentId={sheetId}
+        // A draft would be left behind unnamed, so save it before starting another.
+        canStartNew={sheetId !== null && sheet?.saved === true}
+        onOpen={openSheet}
+      />
+      {toast && (
+        <div
+          role="status"
+          className="fixed bottom-6 left-1/2 -translate-x-1/2 animate-[toast-in_0.2s_ease-out] rounded-md bg-green-700 px-5 py-3 text-white shadow-lg"
+        >
+          {toast}
+        </div>
       )}
-    </main>
+    </div>
+  );
+}
+
+function SaveSheet({
+  sheet,
+  autoFocus,
+  onSave,
+}: {
+  sheet: Sheet;
+  autoFocus: boolean;
+  onSave: (name: string) => Promise<void>;
+}) {
+  const [name, setName] = useState(sheet.name);
+  const input = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (autoFocus) input.current?.focus();
+  }, [autoFocus]);
+
+  const upToDate = sheet.saved && name.trim() === sheet.name;
+
+  const submit = async (e: FormEvent) => {
+    e.preventDefault();
+    await onSave(name.trim());
+  };
+
+  return (
+    <form className="mb-8 flex items-center gap-2" onSubmit={submit}>
+      <input
+        ref={input}
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder="Naziv troška (npr. Zlatibor 2026)"
+        className="w-72"
+        aria-label="Naziv troška"
+      />
+      <button
+        type="submit"
+        disabled={upToDate}
+        className="border-blue-600 bg-blue-600 text-white hover:bg-blue-700 disabled:hover:bg-blue-600"
+      >
+        Sačuvaj trošak
+      </button>
+      {!sheet.saved && <span className="text-gray-500">Nije sačuvano</span>}
+    </form>
+  );
+}
+
+function SavedSheets({
+  sheets,
+  currentId,
+  canStartNew,
+  onOpen,
+}: {
+  sheets: Sheet[];
+  currentId: bigint | null;
+  canStartNew: boolean;
+  onOpen: (id: bigint | null) => void;
+}) {
+  return (
+    <aside className="w-64 shrink-0 border-l border-gray-300 bg-gray-50 px-4 py-8">
+      <h2 className="text-lg">Sačuvani troškovi</h2>
+      <button
+        type="button"
+        disabled={!canStartNew}
+        title={canStartNew ? undefined : "Prvo sačuvaj trenutni trošak"}
+        onClick={() => onOpen(null)}
+      >
+        + Novi trošak
+      </button>
+      {sheets.length === 0 ? (
+        <p className="mt-4 text-gray-500">Još nema sačuvanih troškova.</p>
+      ) : (
+        <ul className="mt-4 space-y-1">
+          {sheets.map((s) => (
+            <li key={s.id.toString()}>
+              <button
+                type="button"
+                className={`w-full text-left ${s.id === currentId ? "border-blue-500 font-semibold" : ""}`}
+                onClick={() => onOpen(s.id)}
+              >
+                {sheetTitle(s)}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </aside>
   );
 }
 
@@ -91,10 +278,12 @@ function Travelers({
   };
 
   return (
-    <section>
+    <section className="mb-10">
       <h2>Putnici</h2>
-      <p>{travelers.map((t) => t.name).join(", ") || "Još nema putnika."}</p>
-      <form onSubmit={submit}>
+      <p className="mb-2">
+        {travelers.map((t) => t.name).join(", ") || "Još nema putnika."}
+      </p>
+      <form className="flex gap-2" onSubmit={submit}>
         <input
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -154,10 +343,10 @@ function Expenses({
     e.shares.find((s) => s.travelerId === travelerId)?.amount ?? 0n;
 
   return (
-    <section>
+    <section className="mb-10">
       <h2>Troškovi</h2>
       <form onSubmit={submit}>
-        <table>
+        <table className="border-collapse">
           <thead>
             <tr>
               <th>Trošak</th>
@@ -246,9 +435,9 @@ function DueMatrix({
       ?.amount ?? 0n;
 
   return (
-    <section>
+    <section className="mb-10">
       <h2>Ko kome duguje (pre prebijanja)</h2>
-      <table>
+      <table className="border-collapse">
         <thead>
           <tr>
             <th>Duguje ↓ / prima →</th>
@@ -282,7 +471,7 @@ function NetDebts({
   nameOf: (id: bigint) => string;
 }) {
   return (
-    <section>
+    <section className="mb-10">
       <h2>Konačan obračun</h2>
       {net.length === 0 ? (
         <p>Niko nikome ne duguje.</p>

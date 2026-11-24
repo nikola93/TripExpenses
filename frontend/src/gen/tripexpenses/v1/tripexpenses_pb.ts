@@ -10,7 +10,36 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file tripexpenses/v1/tripexpenses.proto.
  */
 export const file_tripexpenses_v1_tripexpenses: GenFile = /*@__PURE__*/
-  fileDesc("CiJ0cmlwZXhwZW5zZXMvdjEvdHJpcGV4cGVuc2VzLnByb3RvEg90cmlwZXhwZW5zZXMudjEiJAoIVHJhdmVsZXISCgoCaWQYASABKAQSDAoEbmFtZRgCIAEoCSIsCgVTaGFyZRITCgt0cmF2ZWxlcl9pZBgBIAEoBBIOCgZhbW91bnQYAiABKAMiZAoHRXhwZW5zZRIKCgJpZBgBIAEoBBITCgtkZXNjcmlwdGlvbhgCIAEoCRIQCghwYXllcl9pZBgDIAEoBBImCgZzaGFyZXMYBCADKAsyFi50cmlwZXhwZW5zZXMudjEuU2hhcmUiSAoERGVidBIYChBmcm9tX3RyYXZlbGVyX2lkGAEgASgEEhYKDnRvX3RyYXZlbGVyX2lkGAIgASgEEg4KBmFtb3VudBgDIAEoAyIWChRMaXN0VHJhdmVsZXJzUmVxdWVzdCJFChVMaXN0VHJhdmVsZXJzUmVzcG9uc2USLAoJdHJhdmVsZXJzGAEgAygLMhkudHJpcGV4cGVuc2VzLnYxLlRyYXZlbGVyIiUKFUNyZWF0ZVRyYXZlbGVyUmVxdWVzdBIMCgRuYW1lGAEgASgJIkUKFkNyZWF0ZVRyYXZlbGVyUmVzcG9uc2USKwoIdHJhdmVsZXIYASABKAsyGS50cmlwZXhwZW5zZXMudjEuVHJhdmVsZXIiFQoTTGlzdEV4cGVuc2VzUmVxdWVzdCJCChRMaXN0RXhwZW5zZXNSZXNwb25zZRIqCghleHBlbnNlcxgBIAMoCzIYLnRyaXBleHBlbnNlcy52MS5FeHBlbnNlImUKFENyZWF0ZUV4cGVuc2VSZXF1ZXN0EhMKC2Rlc2NyaXB0aW9uGAEgASgJEhAKCHBheWVyX2lkGAIgASgEEiYKBnNoYXJlcxgDIAMoCzIWLnRyaXBleHBlbnNlcy52MS5TaGFyZSJCChVDcmVhdGVFeHBlbnNlUmVzcG9uc2USKQoHZXhwZW5zZRgBIAEoCzIYLnRyaXBleHBlbnNlcy52MS5FeHBlbnNlIiIKFERlbGV0ZUV4cGVuc2VSZXF1ZXN0EgoKAmlkGAEgASgEIhcKFURlbGV0ZUV4cGVuc2VSZXNwb25zZSIUChJHZXRCYWxhbmNlc1JlcXVlc3QiXwoTR2V0QmFsYW5jZXNSZXNwb25zZRIkCgVncm9zcxgBIAMoCzIVLnRyaXBleHBlbnNlcy52MS5EZWJ0EiIKA25ldBgCIAMoCzIVLnRyaXBleHBlbnNlcy52MS5EZWJ0Ms8EChNUcmlwRXhwZW5zZXNTZXJ2aWNlEl4KDUxpc3RUcmF2ZWxlcnMSJS50cmlwZXhwZW5zZXMudjEuTGlzdFRyYXZlbGVyc1JlcXVlc3QaJi50cmlwZXhwZW5zZXMudjEuTGlzdFRyYXZlbGVyc1Jlc3BvbnNlEmEKDkNyZWF0ZVRyYXZlbGVyEiYudHJpcGV4cGVuc2VzLnYxLkNyZWF0ZVRyYXZlbGVyUmVxdWVzdBonLnRyaXBleHBlbnNlcy52MS5DcmVhdGVUcmF2ZWxlclJlc3BvbnNlElsKDExpc3RFeHBlbnNlcxIkLnRyaXBleHBlbnNlcy52MS5MaXN0RXhwZW5zZXNSZXF1ZXN0GiUudHJpcGV4cGVuc2VzLnYxLkxpc3RFeHBlbnNlc1Jlc3BvbnNlEl4KDUNyZWF0ZUV4cGVuc2USJS50cmlwZXhwZW5zZXMudjEuQ3JlYXRlRXhwZW5zZVJlcXVlc3QaJi50cmlwZXhwZW5zZXMudjEuQ3JlYXRlRXhwZW5zZVJlc3BvbnNlEl4KDURlbGV0ZUV4cGVuc2USJS50cmlwZXhwZW5zZXMudjEuRGVsZXRlRXhwZW5zZVJlcXVlc3QaJi50cmlwZXhwZW5zZXMudjEuRGVsZXRlRXhwZW5zZVJlc3BvbnNlElgKC0dldEJhbGFuY2VzEiMudHJpcGV4cGVuc2VzLnYxLkdldEJhbGFuY2VzUmVxdWVzdBokLnRyaXBleHBlbnNlcy52MS5HZXRCYWxhbmNlc1Jlc3BvbnNlQk1aS2dpdGh1Yi5jb20vbmlrb2xhOTMvdHJpcGV4cGVuc2VzL2JhY2tlbmQvZ2VuL3RyaXBleHBlbnNlcy92MTt0cmlwZXhwZW5zZXN2MWIGcHJvdG8z");
+  fileDesc("CiJ0cmlwZXhwZW5zZXMvdjEvdHJpcGV4cGVuc2VzLnByb3RvEg90cmlwZXhwZW5zZXMudjEiMAoFU2hlZXQSCgoCaWQYASABKAQSDAoEbmFtZRgCIAEoCRINCgVzYXZlZBgDIAEoCCIkCghUcmF2ZWxlchIKCgJpZBgBIAEoBBIMCgRuYW1lGAIgASgJIiwKBVNoYXJlEhMKC3RyYXZlbGVyX2lkGAEgASgEEg4KBmFtb3VudBgCIAEoAyJkCgdFeHBlbnNlEgoKAmlkGAEgASgEEhMKC2Rlc2NyaXB0aW9uGAIgASgJEhAKCHBheWVyX2lkGAMgASgEEiYKBnNoYXJlcxgEIAMoCzIWLnRyaXBleHBlbnNlcy52MS5TaGFyZSJICgREZWJ0EhgKEGZyb21fdHJhdmVsZXJfaWQYASABKAQSFgoOdG9fdHJhdmVsZXJfaWQYAiABKAQSDgoGYW1vdW50GAMgASgDIhMKEUxpc3RTaGVldHNSZXF1ZXN0IjwKEkxpc3RTaGVldHNSZXNwb25zZRImCgZzaGVldHMYASADKAsyFi50cmlwZXhwZW5zZXMudjEuU2hlZXQiIgoSQ3JlYXRlU2hlZXRSZXF1ZXN0EgwKBG5hbWUYASABKAkiPAoTQ3JlYXRlU2hlZXRSZXNwb25zZRIlCgVzaGVldBgBIAEoCzIWLnRyaXBleHBlbnNlcy52MS5TaGVldCIsChBTYXZlU2hlZXRSZXF1ZXN0EgoKAmlkGAEgASgEEgwKBG5hbWUYAiABKAkiOgoRU2F2ZVNoZWV0UmVzcG9uc2USJQoFc2hlZXQYASABKAsyFi50cmlwZXhwZW5zZXMudjEuU2hlZXQiKAoUTGlzdFRyYXZlbGVyc1JlcXVlc3QSEAoIc2hlZXRfaWQYASABKAQiRQoVTGlzdFRyYXZlbGVyc1Jlc3BvbnNlEiwKCXRyYXZlbGVycxgBIAMoCzIZLnRyaXBleHBlbnNlcy52MS5UcmF2ZWxlciI3ChVDcmVhdGVUcmF2ZWxlclJlcXVlc3QSEAoIc2hlZXRfaWQYAiABKAQSDAoEbmFtZRgBIAEoCSJFChZDcmVhdGVUcmF2ZWxlclJlc3BvbnNlEisKCHRyYXZlbGVyGAEgASgLMhkudHJpcGV4cGVuc2VzLnYxLlRyYXZlbGVyIicKE0xpc3RFeHBlbnNlc1JlcXVlc3QSEAoIc2hlZXRfaWQYASABKAQiQgoUTGlzdEV4cGVuc2VzUmVzcG9uc2USKgoIZXhwZW5zZXMYASADKAsyGC50cmlwZXhwZW5zZXMudjEuRXhwZW5zZSJ3ChRDcmVhdGVFeHBlbnNlUmVxdWVzdBIQCghzaGVldF9pZBgEIAEoBBITCgtkZXNjcmlwdGlvbhgBIAEoCRIQCghwYXllcl9pZBgCIAEoBBImCgZzaGFyZXMYAyADKAsyFi50cmlwZXhwZW5zZXMudjEuU2hhcmUiQgoVQ3JlYXRlRXhwZW5zZVJlc3BvbnNlEikKB2V4cGVuc2UYASABKAsyGC50cmlwZXhwZW5zZXMudjEuRXhwZW5zZSIiChREZWxldGVFeHBlbnNlUmVxdWVzdBIKCgJpZBgBIAEoBCIXChVEZWxldGVFeHBlbnNlUmVzcG9uc2UiJgoSR2V0QmFsYW5jZXNSZXF1ZXN0EhAKCHNoZWV0X2lkGAEgASgEIl8KE0dldEJhbGFuY2VzUmVzcG9uc2USJAoFZ3Jvc3MYASADKAsyFS50cmlwZXhwZW5zZXMudjEuRGVidBIiCgNuZXQYAiADKAsyFS50cmlwZXhwZW5zZXMudjEuRGVidDLUBgoTVHJpcEV4cGVuc2VzU2VydmljZRJVCgpMaXN0U2hlZXRzEiIudHJpcGV4cGVuc2VzLnYxLkxpc3RTaGVldHNSZXF1ZXN0GiMudHJpcGV4cGVuc2VzLnYxLkxpc3RTaGVldHNSZXNwb25zZRJYCgtDcmVhdGVTaGVldBIjLnRyaXBleHBlbnNlcy52MS5DcmVhdGVTaGVldFJlcXVlc3QaJC50cmlwZXhwZW5zZXMudjEuQ3JlYXRlU2hlZXRSZXNwb25zZRJSCglTYXZlU2hlZXQSIS50cmlwZXhwZW5zZXMudjEuU2F2ZVNoZWV0UmVxdWVzdBoiLnRyaXBleHBlbnNlcy52MS5TYXZlU2hlZXRSZXNwb25zZRJeCg1MaXN0VHJhdmVsZXJzEiUudHJpcGV4cGVuc2VzLnYxLkxpc3RUcmF2ZWxlcnNSZXF1ZXN0GiYudHJpcGV4cGVuc2VzLnYxLkxpc3RUcmF2ZWxlcnNSZXNwb25zZRJhCg5DcmVhdGVUcmF2ZWxlchImLnRyaXBleHBlbnNlcy52MS5DcmVhdGVUcmF2ZWxlclJlcXVlc3QaJy50cmlwZXhwZW5zZXMudjEuQ3JlYXRlVHJhdmVsZXJSZXNwb25zZRJbCgxMaXN0RXhwZW5zZXMSJC50cmlwZXhwZW5zZXMudjEuTGlzdEV4cGVuc2VzUmVxdWVzdBolLnRyaXBleHBlbnNlcy52MS5MaXN0RXhwZW5zZXNSZXNwb25zZRJeCg1DcmVhdGVFeHBlbnNlEiUudHJpcGV4cGVuc2VzLnYxLkNyZWF0ZUV4cGVuc2VSZXF1ZXN0GiYudHJpcGV4cGVuc2VzLnYxLkNyZWF0ZUV4cGVuc2VSZXNwb25zZRJeCg1EZWxldGVFeHBlbnNlEiUudHJpcGV4cGVuc2VzLnYxLkRlbGV0ZUV4cGVuc2VSZXF1ZXN0GiYudHJpcGV4cGVuc2VzLnYxLkRlbGV0ZUV4cGVuc2VSZXNwb25zZRJYCgtHZXRCYWxhbmNlcxIjLnRyaXBleHBlbnNlcy52MS5HZXRCYWxhbmNlc1JlcXVlc3QaJC50cmlwZXhwZW5zZXMudjEuR2V0QmFsYW5jZXNSZXNwb25zZUJNWktnaXRodWIuY29tL25pa29sYTkzL3RyaXBleHBlbnNlcy9iYWNrZW5kL2dlbi90cmlwZXhwZW5zZXMvdjE7dHJpcGV4cGVuc2VzdjFiBnByb3RvMw");
+
+/**
+ * @generated from message tripexpenses.v1.Sheet
+ */
+export type Sheet = Message<"tripexpenses.v1.Sheet"> & {
+  /**
+   * @generated from field: uint64 id = 1;
+   */
+  id: bigint;
+
+  /**
+   * @generated from field: string name = 2;
+   */
+  name: string;
+
+  /**
+   * False while the sheet is a draft that was never saved.
+   *
+   * @generated from field: bool saved = 3;
+   */
+  saved: boolean;
+};
+
+/**
+ * Describes the message tripexpenses.v1.Sheet.
+ * Use `create(SheetSchema)` to create a new message.
+ */
+export const SheetSchema: GenMessage<Sheet> = /*@__PURE__*/
+  messageDesc(file_tripexpenses_v1_tripexpenses, 0);
 
 /**
  * @generated from message tripexpenses.v1.Traveler
@@ -32,7 +61,7 @@ export type Traveler = Message<"tripexpenses.v1.Traveler"> & {
  * Use `create(TravelerSchema)` to create a new message.
  */
 export const TravelerSchema: GenMessage<Traveler> = /*@__PURE__*/
-  messageDesc(file_tripexpenses_v1_tripexpenses, 0);
+  messageDesc(file_tripexpenses_v1_tripexpenses, 1);
 
 /**
  * Share is the part of an expense that falls on one traveler.
@@ -56,7 +85,7 @@ export type Share = Message<"tripexpenses.v1.Share"> & {
  * Use `create(ShareSchema)` to create a new message.
  */
 export const ShareSchema: GenMessage<Share> = /*@__PURE__*/
-  messageDesc(file_tripexpenses_v1_tripexpenses, 1);
+  messageDesc(file_tripexpenses_v1_tripexpenses, 2);
 
 /**
  * @generated from message tripexpenses.v1.Expense
@@ -88,7 +117,7 @@ export type Expense = Message<"tripexpenses.v1.Expense"> & {
  * Use `create(ExpenseSchema)` to create a new message.
  */
 export const ExpenseSchema: GenMessage<Expense> = /*@__PURE__*/
-  messageDesc(file_tripexpenses_v1_tripexpenses, 2);
+  messageDesc(file_tripexpenses_v1_tripexpenses, 3);
 
 /**
  * Debt says that from_traveler_id owes to_traveler_id the given amount.
@@ -117,12 +146,121 @@ export type Debt = Message<"tripexpenses.v1.Debt"> & {
  * Use `create(DebtSchema)` to create a new message.
  */
 export const DebtSchema: GenMessage<Debt> = /*@__PURE__*/
-  messageDesc(file_tripexpenses_v1_tripexpenses, 3);
+  messageDesc(file_tripexpenses_v1_tripexpenses, 4);
+
+/**
+ * @generated from message tripexpenses.v1.ListSheetsRequest
+ */
+export type ListSheetsRequest = Message<"tripexpenses.v1.ListSheetsRequest"> & {
+};
+
+/**
+ * Describes the message tripexpenses.v1.ListSheetsRequest.
+ * Use `create(ListSheetsRequestSchema)` to create a new message.
+ */
+export const ListSheetsRequestSchema: GenMessage<ListSheetsRequest> = /*@__PURE__*/
+  messageDesc(file_tripexpenses_v1_tripexpenses, 5);
+
+/**
+ * @generated from message tripexpenses.v1.ListSheetsResponse
+ */
+export type ListSheetsResponse = Message<"tripexpenses.v1.ListSheetsResponse"> & {
+  /**
+   * Newest first.
+   *
+   * @generated from field: repeated tripexpenses.v1.Sheet sheets = 1;
+   */
+  sheets: Sheet[];
+};
+
+/**
+ * Describes the message tripexpenses.v1.ListSheetsResponse.
+ * Use `create(ListSheetsResponseSchema)` to create a new message.
+ */
+export const ListSheetsResponseSchema: GenMessage<ListSheetsResponse> = /*@__PURE__*/
+  messageDesc(file_tripexpenses_v1_tripexpenses, 6);
+
+/**
+ * @generated from message tripexpenses.v1.CreateSheetRequest
+ */
+export type CreateSheetRequest = Message<"tripexpenses.v1.CreateSheetRequest"> & {
+  /**
+   * @generated from field: string name = 1;
+   */
+  name: string;
+};
+
+/**
+ * Describes the message tripexpenses.v1.CreateSheetRequest.
+ * Use `create(CreateSheetRequestSchema)` to create a new message.
+ */
+export const CreateSheetRequestSchema: GenMessage<CreateSheetRequest> = /*@__PURE__*/
+  messageDesc(file_tripexpenses_v1_tripexpenses, 7);
+
+/**
+ * @generated from message tripexpenses.v1.CreateSheetResponse
+ */
+export type CreateSheetResponse = Message<"tripexpenses.v1.CreateSheetResponse"> & {
+  /**
+   * @generated from field: tripexpenses.v1.Sheet sheet = 1;
+   */
+  sheet?: Sheet | undefined;
+};
+
+/**
+ * Describes the message tripexpenses.v1.CreateSheetResponse.
+ * Use `create(CreateSheetResponseSchema)` to create a new message.
+ */
+export const CreateSheetResponseSchema: GenMessage<CreateSheetResponse> = /*@__PURE__*/
+  messageDesc(file_tripexpenses_v1_tripexpenses, 8);
+
+/**
+ * @generated from message tripexpenses.v1.SaveSheetRequest
+ */
+export type SaveSheetRequest = Message<"tripexpenses.v1.SaveSheetRequest"> & {
+  /**
+   * @generated from field: uint64 id = 1;
+   */
+  id: bigint;
+
+  /**
+   * @generated from field: string name = 2;
+   */
+  name: string;
+};
+
+/**
+ * Describes the message tripexpenses.v1.SaveSheetRequest.
+ * Use `create(SaveSheetRequestSchema)` to create a new message.
+ */
+export const SaveSheetRequestSchema: GenMessage<SaveSheetRequest> = /*@__PURE__*/
+  messageDesc(file_tripexpenses_v1_tripexpenses, 9);
+
+/**
+ * @generated from message tripexpenses.v1.SaveSheetResponse
+ */
+export type SaveSheetResponse = Message<"tripexpenses.v1.SaveSheetResponse"> & {
+  /**
+   * @generated from field: tripexpenses.v1.Sheet sheet = 1;
+   */
+  sheet?: Sheet | undefined;
+};
+
+/**
+ * Describes the message tripexpenses.v1.SaveSheetResponse.
+ * Use `create(SaveSheetResponseSchema)` to create a new message.
+ */
+export const SaveSheetResponseSchema: GenMessage<SaveSheetResponse> = /*@__PURE__*/
+  messageDesc(file_tripexpenses_v1_tripexpenses, 10);
 
 /**
  * @generated from message tripexpenses.v1.ListTravelersRequest
  */
 export type ListTravelersRequest = Message<"tripexpenses.v1.ListTravelersRequest"> & {
+  /**
+   * @generated from field: uint64 sheet_id = 1;
+   */
+  sheetId: bigint;
 };
 
 /**
@@ -130,7 +268,7 @@ export type ListTravelersRequest = Message<"tripexpenses.v1.ListTravelersRequest
  * Use `create(ListTravelersRequestSchema)` to create a new message.
  */
 export const ListTravelersRequestSchema: GenMessage<ListTravelersRequest> = /*@__PURE__*/
-  messageDesc(file_tripexpenses_v1_tripexpenses, 4);
+  messageDesc(file_tripexpenses_v1_tripexpenses, 11);
 
 /**
  * @generated from message tripexpenses.v1.ListTravelersResponse
@@ -147,12 +285,17 @@ export type ListTravelersResponse = Message<"tripexpenses.v1.ListTravelersRespon
  * Use `create(ListTravelersResponseSchema)` to create a new message.
  */
 export const ListTravelersResponseSchema: GenMessage<ListTravelersResponse> = /*@__PURE__*/
-  messageDesc(file_tripexpenses_v1_tripexpenses, 5);
+  messageDesc(file_tripexpenses_v1_tripexpenses, 12);
 
 /**
  * @generated from message tripexpenses.v1.CreateTravelerRequest
  */
 export type CreateTravelerRequest = Message<"tripexpenses.v1.CreateTravelerRequest"> & {
+  /**
+   * @generated from field: uint64 sheet_id = 2;
+   */
+  sheetId: bigint;
+
   /**
    * @generated from field: string name = 1;
    */
@@ -164,7 +307,7 @@ export type CreateTravelerRequest = Message<"tripexpenses.v1.CreateTravelerReque
  * Use `create(CreateTravelerRequestSchema)` to create a new message.
  */
 export const CreateTravelerRequestSchema: GenMessage<CreateTravelerRequest> = /*@__PURE__*/
-  messageDesc(file_tripexpenses_v1_tripexpenses, 6);
+  messageDesc(file_tripexpenses_v1_tripexpenses, 13);
 
 /**
  * @generated from message tripexpenses.v1.CreateTravelerResponse
@@ -181,12 +324,16 @@ export type CreateTravelerResponse = Message<"tripexpenses.v1.CreateTravelerResp
  * Use `create(CreateTravelerResponseSchema)` to create a new message.
  */
 export const CreateTravelerResponseSchema: GenMessage<CreateTravelerResponse> = /*@__PURE__*/
-  messageDesc(file_tripexpenses_v1_tripexpenses, 7);
+  messageDesc(file_tripexpenses_v1_tripexpenses, 14);
 
 /**
  * @generated from message tripexpenses.v1.ListExpensesRequest
  */
 export type ListExpensesRequest = Message<"tripexpenses.v1.ListExpensesRequest"> & {
+  /**
+   * @generated from field: uint64 sheet_id = 1;
+   */
+  sheetId: bigint;
 };
 
 /**
@@ -194,7 +341,7 @@ export type ListExpensesRequest = Message<"tripexpenses.v1.ListExpensesRequest">
  * Use `create(ListExpensesRequestSchema)` to create a new message.
  */
 export const ListExpensesRequestSchema: GenMessage<ListExpensesRequest> = /*@__PURE__*/
-  messageDesc(file_tripexpenses_v1_tripexpenses, 8);
+  messageDesc(file_tripexpenses_v1_tripexpenses, 15);
 
 /**
  * @generated from message tripexpenses.v1.ListExpensesResponse
@@ -211,12 +358,17 @@ export type ListExpensesResponse = Message<"tripexpenses.v1.ListExpensesResponse
  * Use `create(ListExpensesResponseSchema)` to create a new message.
  */
 export const ListExpensesResponseSchema: GenMessage<ListExpensesResponse> = /*@__PURE__*/
-  messageDesc(file_tripexpenses_v1_tripexpenses, 9);
+  messageDesc(file_tripexpenses_v1_tripexpenses, 16);
 
 /**
  * @generated from message tripexpenses.v1.CreateExpenseRequest
  */
 export type CreateExpenseRequest = Message<"tripexpenses.v1.CreateExpenseRequest"> & {
+  /**
+   * @generated from field: uint64 sheet_id = 4;
+   */
+  sheetId: bigint;
+
   /**
    * @generated from field: string description = 1;
    */
@@ -238,7 +390,7 @@ export type CreateExpenseRequest = Message<"tripexpenses.v1.CreateExpenseRequest
  * Use `create(CreateExpenseRequestSchema)` to create a new message.
  */
 export const CreateExpenseRequestSchema: GenMessage<CreateExpenseRequest> = /*@__PURE__*/
-  messageDesc(file_tripexpenses_v1_tripexpenses, 10);
+  messageDesc(file_tripexpenses_v1_tripexpenses, 17);
 
 /**
  * @generated from message tripexpenses.v1.CreateExpenseResponse
@@ -255,7 +407,7 @@ export type CreateExpenseResponse = Message<"tripexpenses.v1.CreateExpenseRespon
  * Use `create(CreateExpenseResponseSchema)` to create a new message.
  */
 export const CreateExpenseResponseSchema: GenMessage<CreateExpenseResponse> = /*@__PURE__*/
-  messageDesc(file_tripexpenses_v1_tripexpenses, 11);
+  messageDesc(file_tripexpenses_v1_tripexpenses, 18);
 
 /**
  * @generated from message tripexpenses.v1.DeleteExpenseRequest
@@ -272,7 +424,7 @@ export type DeleteExpenseRequest = Message<"tripexpenses.v1.DeleteExpenseRequest
  * Use `create(DeleteExpenseRequestSchema)` to create a new message.
  */
 export const DeleteExpenseRequestSchema: GenMessage<DeleteExpenseRequest> = /*@__PURE__*/
-  messageDesc(file_tripexpenses_v1_tripexpenses, 12);
+  messageDesc(file_tripexpenses_v1_tripexpenses, 19);
 
 /**
  * @generated from message tripexpenses.v1.DeleteExpenseResponse
@@ -285,12 +437,16 @@ export type DeleteExpenseResponse = Message<"tripexpenses.v1.DeleteExpenseRespon
  * Use `create(DeleteExpenseResponseSchema)` to create a new message.
  */
 export const DeleteExpenseResponseSchema: GenMessage<DeleteExpenseResponse> = /*@__PURE__*/
-  messageDesc(file_tripexpenses_v1_tripexpenses, 13);
+  messageDesc(file_tripexpenses_v1_tripexpenses, 20);
 
 /**
  * @generated from message tripexpenses.v1.GetBalancesRequest
  */
 export type GetBalancesRequest = Message<"tripexpenses.v1.GetBalancesRequest"> & {
+  /**
+   * @generated from field: uint64 sheet_id = 1;
+   */
+  sheetId: bigint;
 };
 
 /**
@@ -298,7 +454,7 @@ export type GetBalancesRequest = Message<"tripexpenses.v1.GetBalancesRequest"> &
  * Use `create(GetBalancesRequestSchema)` to create a new message.
  */
 export const GetBalancesRequestSchema: GenMessage<GetBalancesRequest> = /*@__PURE__*/
-  messageDesc(file_tripexpenses_v1_tripexpenses, 14);
+  messageDesc(file_tripexpenses_v1_tripexpenses, 21);
 
 /**
  * @generated from message tripexpenses.v1.GetBalancesResponse
@@ -324,7 +480,7 @@ export type GetBalancesResponse = Message<"tripexpenses.v1.GetBalancesResponse">
  * Use `create(GetBalancesResponseSchema)` to create a new message.
  */
 export const GetBalancesResponseSchema: GenMessage<GetBalancesResponse> = /*@__PURE__*/
-  messageDesc(file_tripexpenses_v1_tripexpenses, 15);
+  messageDesc(file_tripexpenses_v1_tripexpenses, 22);
 
 /**
  * TripExpensesService tracks shared trip expenses and works out who owes whom.
@@ -332,6 +488,36 @@ export const GetBalancesResponseSchema: GenMessage<GetBalancesResponse> = /*@__P
  * @generated from service tripexpenses.v1.TripExpensesService
  */
 export const TripExpensesService: GenService<{
+  /**
+   * A sheet is one named calculation, e.g. a single trip. Travelers and
+   * expenses always belong to a sheet.
+   *
+   * @generated from rpc tripexpenses.v1.TripExpensesService.ListSheets
+   */
+  listSheets: {
+    methodKind: "unary";
+    input: typeof ListSheetsRequestSchema;
+    output: typeof ListSheetsResponseSchema;
+  },
+  /**
+   * @generated from rpc tripexpenses.v1.TripExpensesService.CreateSheet
+   */
+  createSheet: {
+    methodKind: "unary";
+    input: typeof CreateSheetRequestSchema;
+    output: typeof CreateSheetResponseSchema;
+  },
+  /**
+   * SaveSheet names the sheet and marks it saved, so it shows up in the list
+   * of saved sheets.
+   *
+   * @generated from rpc tripexpenses.v1.TripExpensesService.SaveSheet
+   */
+  saveSheet: {
+    methodKind: "unary";
+    input: typeof SaveSheetRequestSchema;
+    output: typeof SaveSheetResponseSchema;
+  },
   /**
    * @generated from rpc tripexpenses.v1.TripExpensesService.ListTravelers
    */
